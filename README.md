@@ -1,4 +1,4 @@
-chraityhosting.ie
+charityhosting.ie
 =================
 
 charityhosting.ie is a system that allows users to register a domain for their charity. Users can select from a number of templates for the look and feel of their webpage through a simple step-by-step walkthrough.
