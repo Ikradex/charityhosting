@@ -10,8 +10,6 @@ Collaborators: Chris Twomey, Dan Morgan, Rolando Fernandez.
 ## Deploy
 
 
-    cd directory_of_your_choice
-
     git clone git://github.com/Ikradex/charityhosting.git directory_to_put_git
     
     cd directory_of_git
