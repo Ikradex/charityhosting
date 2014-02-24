@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CharitySystemManager</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
+<title>Charity System Manager</title>
+<meta charset="utf-8" />
+<%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+<%= stylesheet_link_tag params[ :controller ], media: "all", "data-turbolinks-track" => true %>
+<%= javascript_include_tag "application", params[ :controller ] %>
+<%= csrf_meta_tags %>
 </head>
-<body>
-
-<%= yield %>
-
-</body>
+	<body>
+		<div id="wrapper">
+			<%= content_for?( :content ) ? yield( :content ) : yield %>
+		</div>
+	</body>
 </html>

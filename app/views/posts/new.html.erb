@@ -1,0 +1,31 @@
+<h2>New blog post</h2>
+
+<%= form_for [ @charity, @post ] do |f| %>
+	<% if @post.errors.any? %>
+		<div id="form-errors">
+			<p><%= pluralize( @post.errors.count, "error" ) %> prohibited this post from being saved:</p>
+		    
+		    <ul>
+		    <% @post.errors.full_messages.each do |msg| %>
+		    	<li><%= msg %></li>
+		    <% end %>
+    		</ul>
+		</div>
+	<% end %>
+	<fieldset>
+		<%= f.text_field :title, class: "form-control", placeholder: "Title" %>
+	</fieldset>
+	<fieldset>
+    	<%= f.text_area :content, class: "form-control", id: "editor", placeholder: "Write your content here" %>
+	</fieldset>
+	<input type="submit" name="submit" value="Save Post" class="btn btn-primary btn-wide" />
+	<input type="reset" name="clear" value="Clear" class="btn btn-default btn-wide" />
+<% end %>
+
+<script type="text/javascript">
+	$( document ).ready( function( ) {
+		$('textarea').trumbowyg({
+			semantic: true
+		});
+	});
+</script>

@@ -1,0 +1,51 @@
+<h2>Signup Today!</h2>
+
+<%= form_for :user, url: users_path do |f| %>
+	<% if @user.errors.any? %>
+		<div id="form-errors">
+			<p><%= pluralize(@user.errors.count, "error") %> prohibited this post from being saved:</p>
+		    
+		    <ul>
+		    <% @user.errors.full_messages.each do |msg| %>
+		    	<li><%= msg %></li>
+		    <% end %>
+    		</ul>
+		</div>
+	<% end %>
+	<fieldset>
+		<div class="row">
+			<div class="col-md-4">
+				<label for="f-name-inp">What's your first name?</label>
+				<input id="f-name-inp" type="text" placeholder="First name" name="user[f_name]" class="form-control" />
+			</div>
+			<div class="col-md-4">
+				<label for="l-name-inp">What's your last name?</label>
+				<input id="l-name-inp" type="text" placeholder="Last name" name="user[l_name]" class="form-control" />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4">
+				<label for="email-inp">What's your email address?</label>
+				<input id="email-inp" type="text" placeholder="Email" name="user[email]" class="form-control" />
+			</div>
+			<div class="col-md-4">
+				<label for="email-conf-inp">Re-type your email address.</label>
+				<input id="email-conf-inp" type="text" placeholder="Repeat your email" name="user[email_confirmation]" class="form-control" />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4">
+				<label for="pass-inp">Enter a password.</label>
+				<input id="pass-inp" type="password" placeholder="Password" name="user[password]" class="form-control" />
+			</div>
+			<div class="col-md-4">
+				<label for="pass-conf-inp">Re-type your password.</label>
+				<input id="pass-conf-inp" type="password" placeholder="Repeat your password" name="user[password_confirmation]" class="form-control" />
+			</div>
+		</div>
+	</fieldset>
+	<input type="submit" name="submit" value="Signup now" class="btn btn-primary btn-wide" />
+	<input type="reset" name="clear" value="Clear" class="btn btn-default btn-wide" />
+<% end %>

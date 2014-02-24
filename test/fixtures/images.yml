@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  data-src: MyText
+  alt_desc: MyString
+  mime-type: MyString
+
+two:
+  data-src: MyText
+  alt_desc: MyString
+  mime-type: MyString

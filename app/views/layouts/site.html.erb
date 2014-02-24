@@ -1,0 +1,31 @@
+<% content_for :content do %>
+<header>
+	<nav class="navbar navbar-default navbar-lg" role="navigation">
+		<div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+		     	<span class="sr-only">Toggle navigation</span>
+		    </button>
+		    <a class="navbar-brand" href="#">CSM</a>
+  		</div>
+  		<div class="collapse navbar-collapse" id="navbar-collapse-01">
+		    <ul class="nav navbar-nav">           
+			    <li><a href="charities/">Charities</a></li>
+			    <li><a href="#fakelink">About</a></li>
+			</ul>
+			<a class="btn btn-primary navbar-btn btn-sm" href="<%= signup_path %>">Sign up</a>
+			<form class="navbar-form navbar-right" action="#" role="search">
+      			<div class="form-group">
+        			<div class="input-group">
+          				<input class="form-control" id="seach-inp" type="search" placeholder="Search">
+      					<span class="input-group-btn">
+    						<button type="submit" class="btn"><span class="fui-search"></span></button>
+      					</span>            
+        			</div>
+      			</div>               
+    		</form>
+	  	</div><!-- /.navbar-collapse -->
+	</nav>
+</header>
+<%= yield %>
+<% end %>
+<%= render template: "layouts/application" %>

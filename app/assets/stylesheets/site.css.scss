@@ -1,0 +1,50 @@
+html, body {
+    background: image-url('main-bg.jpg');
+    background-position: fixed;
+}
+
+h1, h2, h3, h4, h5, h6,
+p#site-slogan, input, button,
+nav.navbar-default ul.nav li a {
+	color: #FFF;
+} 
+
+nav.navbar-default a.navbar-brand {
+	color: #1abc9c;
+}
+
+header {
+    nav.navbar-default {
+        display: block;
+        margin: 0.2em auto;
+        width: 90%;
+        background: transparent;
+        border-radius: 0;
+        border-bottom: 1px solid rgba( 180, 180, 180, 0.5 );
+    }
+}
+
+h1#site-title {
+	margin-top: 1em;
+}
+
+p#site-slogan {
+    margin-top: 0.2em;
+    font-style: italic;
+}
+
+h1#site-title, p#site-slogan {
+    text-align: center;
+    text-shadow: 1px 1px 6px #222;
+}
+
+form {
+    display: block;
+    margin: 2em auto;
+    width: 50%;
+
+    input, button {
+    	color: #FFF !important;
+        background: transparent !important;
+    }
+}

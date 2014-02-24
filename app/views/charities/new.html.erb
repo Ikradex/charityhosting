@@ -1,0 +1,57 @@
+<%= form_for :charity, url: charities_path do |f| %>
+	<% 
+	errors = Array.new
+	errors.push( *@charity.errors.full_messages )
+	if !@page.nil? 
+		errors.push( *@page.errors.full_messages )
+	end
+	if !@content.nil? 
+		errors.push( *@content.errors.full_messages )
+	end
+
+	if !errors.empty? %>
+	<div id="form-errors">
+		<p><%= pluralize( errors.count, "error" ) %> prohibited this post from being saved:</p>
+	    
+	    <ul>
+	    <% errors.each do |msg| %>
+	    	<li><%= msg %></li>
+	    <% end %>
+		</ul>
+	</div>
+	<% end %>
+	<fieldset>
+		<h4>Enter a domain to register.</h4>
+
+		<%= f.text_field :domain, class: "form-control", placeholder: "Enter your domain", value: params[ :domain ]? params[ :domain ] : "" %>
+	</fieldset>
+	<fieldset>
+		<h4>We need some of your details.</h4>
+
+		<%= f.label :org_name, "What's your organisation?" %>
+		<%= f.text_field :org_name, class: "form-control", placeholder: "Organisation" %>
+
+		<%= f.label :email, "And your email address" %>
+		<%= f.text_field :email, class: "form-control", type: "email", placeholder: "Email" %>
+	</fieldset>
+	<fieldset>
+		<h4>Choose a template.</h4>
+
+		<label class="radio">
+		  	<input type="radio" name="charity[template]" value="1" data-toggle="radio" checked />
+		  	Template 1.
+		</label>
+
+		<label class="radio">
+		  	<input type="radio" name="charity[template]" value="2" data-toggle="radio" />
+		  	Template 2.
+		</label>
+	</fieldset>
+
+	<input type="submit" name="submit" value="Save" class="btn btn-primary btn-wide" />
+	<input type="reset" name="clear" value="Clear" class="btn btn-default btn-wide" />
+<% end %>
+
+<script type="text/javascript">
+	$( ":radio" ).radio( );
+</script>

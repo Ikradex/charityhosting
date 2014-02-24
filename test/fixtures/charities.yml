@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  domain: MyString
+  org_name: MyString
+  has_page_lostfound: false
+  has_page_sponsor: false
+  has_page_adopt: false
+
+two:
+  domain: MyString
+  org_name: MyString
+  has_page_lostfound: false
+  has_page_sponsor: false
+  has_page_adopt: false

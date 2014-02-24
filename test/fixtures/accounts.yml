@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  income: 1.5
+  expenditure: 1.5
+  timestamp: 2014-02-05 12:25:32
+
+two:
+  income: 1.5
+  expenditure: 1.5
+  timestamp: 2014-02-05 12:25:32
