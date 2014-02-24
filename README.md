@@ -10,11 +10,11 @@ Collaborators: Chris Twomey, Dan Morgan, Rolando Fernandez.
 ## Deploy
 
 
-    git clone git://github.com/Ikradex/charityhosting.git directory_to_put_git
+    git clone git@github.com:Ikradex/charityhosting.git directory_to_put_git
     
     cd directory_of_git
     
-    rails server -d
+    rails server
     
     
 
