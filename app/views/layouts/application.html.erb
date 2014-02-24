@@ -8,9 +8,9 @@
 <%= javascript_include_tag "application", params[ :controller ] %>
 <%= csrf_meta_tags %>
 </head>
-	<body>
-		<div id="wrapper">
-			<%= content_for?( :content ) ? yield( :content ) : yield %>
-		</div>
-	</body>
+  <body>
+    <div id="wrapper">
+      <%= content_for?( :content ) ? yield( :content ) : yield %>
+    </div>
+  </body>
 </html>

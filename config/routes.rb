@@ -14,12 +14,12 @@ CharitySystemManager::Application.routes.draw do
   get "/charities/:charity_id/" => "pages#show"
 
   resources :charities do
-      resources :pages, :path => '' #removes the "pages" part of the url
+    resources :pages, :path => '' #removes the "pages" part of the url
   end
 
-  resources :pages do 
+  resources :pages do
     resources :content
   end
-  
+
   resources :users
 end

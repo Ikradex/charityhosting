@@ -1,5 +1,5 @@
 class SiteController < ApplicationController
-    def index
+  def index
   end
 
 =begin

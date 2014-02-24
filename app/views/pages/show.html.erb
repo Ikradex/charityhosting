@@ -1,42 +1,42 @@
 <% if session[ :auth ] and session[ :user_id ] == @charity.user_id %>
-	<%= render "cp" %>
+  <%= render "cp" %>
 <% end %>
 
 <div id="site-masthead">
-	<h1 class="masthead-header"><%= link_to @charity.org_name, charity_path( @charity ) %></h1>
-	<img class="site-logo" src="http://placehold.it/150x150" alt="Site logo" />
+  <h1 class="masthead-header"><%= link_to @charity.org_name, charity_path( @charity ) %></h1>
+  <img class="site-logo" src="http://placehold.it/150x150" alt="Site logo" />
 </div>
 
 <% if @pages.size > 1 %>
 <nav id="site-nav" class="navbar" role="navigation">
-	<ul class="nav navbar-nav">
-		<% 
-		@pages.each do |page|
-			title = page.title
+  <ul class="nav navbar-nav">
+    <% 
+    @pages.each do |page|
+      title = page.title
 
-			if page.title == "index"
-				title = "Home"
-			end	
-		%>
-		<li <%= params[ :id ] == page.title ? "class=current" : "" %>><%= link_to title.capitalize.tr( "_", " " ), charity_page_path( @charity, page ) %></li>
-		<% end %>
-	</ul>
+      if page.title == "index"
+        title = "Home"
+      end 
+    %>
+    <li <%= params[ :id ] == page.title ? "class=current" : "" %>><%= link_to title.capitalize.tr( "_", " " ), charity_page_path( @charity, page ) %></li>
+    <% end %>
+  </ul>
 </nav>
 <% end %>
 
 <div class="container">
-	<div class="row">
-		<div class="col col1 col-md-9">
-			<div class="content">
-				<% if !@content.nil? %>
-				<%= raw @content.content_src %>
-				<% else %>
-				<p>There doesn't seem to be anything here.</p>
-				<% end %>
-			</div>
-		</div>
-		<div class="col col2 col-md-3">
+  <div class="row">
+    <div class="col col1 col-md-9">
+      <div class="content">
+        <% if !@content.nil? %>
+        <%= raw @content.content_src %>
+        <% else %>
+        <p>There doesn't seem to be anything here.</p>
+        <% end %>
+      </div>
+    </div>
+    <div class="col col2 col-md-3">
 
-		</div>		
-	</div>
+    </div>    
+  </div>
 </div>

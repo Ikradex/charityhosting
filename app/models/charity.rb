@@ -1,24 +1,27 @@
 class Charity < ActiveRecord::Base
-	belongs_to :user
-	has_one :account
-	has_many :pages
+  belongs_to :user
+  has_one :account
+  has_many :pages
 
-	before_save { self.domain = domain.downcase }
-	#before_save :get_domain
+  before_save { self.domain = domain.downcase }
 
-	validates :domain, presence: true, uniqueness: true
-	validates :email, presence: true, email_format: { message: "invalid format for email" }
-	validates :org_name, presence: true, length: { in: 2..120 }
-	validates :template, presence: true, inclusion: { in: 1..3 }
+  # validates - ensures attribute conforms to specified constraints
+  # unique domain, required
+  validates :domain, presence: true, uniqueness: true
+  # email format, required
+  validates :email, presence: true, email_format: { message: "invalid format for email" }
+  # organisation name, required, must be of length between 2 and 120 characters
+  validates :org_name, presence: true, length: { in: 2..120 }
+  # site template, required, must be of value 1, 2 or 3
+  validates :template, presence: true, inclusion: { in: 1..3 }
 
-	accepts_nested_attributes_for :account, :pages
+  # this allows us to save pages, account in the charity form
+  # for nested resources
+  accepts_nested_attributes_for :account, :pages
 
-	def get_domain
-		#self.domain = URI.parse( domain ).host
-	end
-
-	#override to_param to show domain name instead of id
-	def to_param
-		domain
-	end
+  # override to_param to show domain name instead of id
+  # eg /charities/catactiontrust rather than /charities/1
+  def to_param
+    domain
+  end
 end

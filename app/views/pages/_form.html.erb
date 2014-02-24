@@ -1,41 +1,41 @@
 <% # this is a "partial" - basically a reuseable piece of rails we can render in multiple views %>
 
 <%= form_for ([ @charity, @page ]) do |f| %>
-	<%
-	errors = Array.new
-	if !@page.nil? 
-		errors.push( *@page.errors.full_messages )
-	end
-	if !@content.nil? 
-		errors.push( *@content.errors.full_messages )
-	end
+  <%
+  errors = Array.new
+  if !@page.nil? 
+    errors.push( *@page.errors.full_messages )
+  end
+  if !@content.nil? 
+    errors.push( *@content.errors.full_messages )
+  end
 
-	if !errors.empty? %>
-	<div id="form-errors">
-		<p><%= pluralize( errors.count, "error" ) %> prohibited this post from being saved:</p>
-	    
-	    <ul>
-	    <% errors.each do |msg| %>
-	    	<li><%= msg %></li>
-	    <% end %>
-		</ul>
-	</div>
-	<% end %>
-	<fieldset>
-		<% if params[ :action ] == "edit" and @page.title == 'index' %>
-			<%= f.text_field :title, class: "form-control", placeholder: "Unique name of the page", disabled: "disabled" %>
-			<p>You cannot edit the home page's name.</p>
-		<% else %>
-			<%= f.text_field :title, class: "form-control", placeholder: "Unique name of the page" %>
-		<% end %>
-	</fieldset>
-	<fieldset>
-		<%= fields_for @content do |content_fields| %>
-	   		<%= content_fields.text_area :content_src, class: "form-control editor", placeholder: "Write your content here!", style: "min-height: 300px" %>
-	   	<% end %>
-	</fieldset>
-	
-	<input type="submit" name="submit" value="Save" class="btn btn-primary btn-wide" />
+  if !errors.empty? %>
+  <div id="form-errors">
+    <p><%= pluralize( errors.count, "error" ) %> prohibited this post from being saved:</p>
+      
+    <ul>
+      <% errors.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+  <fieldset>
+    <% if params[ :action ] == "edit" and @page.title == 'index' %>
+      <%= f.text_field :title, class: "form-control", placeholder: "Unique name of the page", disabled: "disabled" %>
+      <p>You cannot edit the home page's name.</p>
+    <% else %>
+      <%= f.text_field :title, class: "form-control", placeholder: "Unique name of the page" %>
+    <% end %>
+  </fieldset>
+  <fieldset>
+    <%= fields_for @content do |content_fields| %>
+        <%= content_fields.text_area :content_src, class: "form-control editor", placeholder: "Write your content here!", style: "min-height: 300px" %>
+      <% end %>
+  </fieldset>
+  
+  <input type="submit" name="submit" value="Save" class="btn btn-primary btn-wide" />
 <% end %>
 
 <%= javascript_include_tag "csmeditor" %>

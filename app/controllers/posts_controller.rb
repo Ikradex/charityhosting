@@ -8,15 +8,15 @@ class PostsController < ApplicationController
 
   def new
     if session[ :auth ]
-      
+
     else
-        render 'index'
+      render 'index'
     end
   end
 
   def create
     render text: params[ :post ].inspect
-    
+
 =begin  @post = Post.new( get_post_params )
 
     if @post.save
@@ -27,17 +27,17 @@ class PostsController < ApplicationController
 =end
 
     if session[ :userid ] and @post.save
-        redirect_to @post
-    else 
-        render 'new'
+      redirect_to @post
+    else
+      render 'new'
     end
   end
 
   def edit
   end
 
-  private 
-    def get_post_params
-        params.require( :post ).permit( :title, :content )
-    end
+  private
+  def get_post_params
+    params.require( :post ).permit( :title, :content )
+  end
 end

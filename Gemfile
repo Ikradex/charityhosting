@@ -35,6 +35,8 @@ end
 gem 'validates_email_format_of'
 gem 'bcrypt-ruby', '~> 3.1.2', require: "bcrypt"
 
+gem 'htmlbeautifier'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

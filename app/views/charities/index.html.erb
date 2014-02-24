@@ -1,29 +1,29 @@
 <div class="row">
-	<div class="col col1 col-md-9">
-		<% @charities.each do |c| %>
+  <div class="col col1 col-md-9">
+    <% @charities.each do |c| %>
 
-		<div class="charity-summary">
-			<div class="row">
-				<div class="col1 col-md-3">
-					<img class="site-logo" src="http://placehold.it/150x150" alt="Site logo" />
-				</div>
-				<div class="col2 col-md-8">
-					<h4><%= c.org_name %></h4>
+    <div class="charity-summary">
+      <div class="row">
+        <div class="col1 col-md-3">
+          <img class="site-logo" src="http://placehold.it/150x150" alt="Site logo" />
+        </div>
+        <div class="col2 col-md-8">
+          <h4><%= c.org_name %></h4>
 
-					<p>This is a charity description. We help all kinds of animals from wombats to giraffes. We do very good things and would like you to support us. See our page below.</p>
+          <p>This is a charity description. We help all kinds of animals from wombats to giraffes. We do very good things and would like you to support us. See our page below.</p>
 
-					<a href="<%= charity_path( c ) %>" class="btn btn-primary">Vist Page</a>
-				</div>
-			</div>
-		</div>
+          <a href="<%= charity_path( c ) %>" class="btn btn-primary">Vist Page</a>
+        </div>
+      </div>
+    </div>
 
-		<% end %>
-	</div>
-	<div class="col col2 col-md-3">
-		<h3>Register your domain now</h3>
+    <% end %>
+  </div>
+  <div class="col col2 col-md-3">
+    <h3>Register your domain now</h3>
 
-		<p>It's easy to set up your own charity. Click the link below to begin setting up your domain for your charity. It only takes a few steps to have your website up and running.</p>
+    <p>It's easy to set up your own charity. Click the link below to begin setting up your domain for your charity. It only takes a few steps to have your website up and running.</p>
 
-		<a href="<%= register_charity_path %>" class="btn btn-embossed btn-primary">Register now</a>
-	</div>
+    <a href="<%= register_charity_path %>" class="btn btn-embossed btn-primary">Register now</a>
+  </div>
 </div>

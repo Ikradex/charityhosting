@@ -1,23 +1,23 @@
 <div class="row">
-	<div class="col col1 col-md-5">
-		<h3>Login</h3>
+  <div class="col col1 col-md-5">
+    <h3>Login</h3>
 
-		<%= form_for :user, url: { action: "login", return: params[ :return ] } do |f| %>
-			<fieldset>
-				<label for="email-inp">Email address?</label>
-				<input id="email-inp" type="text" placeholder="Email" name="user[email]" class="form-control" />
+    <%= form_for :user, url: { action: "login", return: params[ :return ] } do |f| %>
+    <fieldset>
+      <%= f.label :email, "Email address" %>
+      <%= f.text_field :email, class: "form-control", placeholder: "Email" %>
 
-				<label for="pass-inp">Password.</label>
-				<input id="pass-inp" type="password" placeholder="Password" name="user[password]" class="form-control" />
-			</fieldset>
+      <%= f.label :password, "Password" %>
+      <%= f.text_field :password, class: "form-control", placeholder: "Password" %>
+    </fieldset>
 
-			<input type="submit" name="submit" value="Login" class="btn btn-primary btn-wide" />
-			<input type="reset" name="clear" value="Clear" class="btn btn-default btn-wide" />
-		<% end %>
-	</div>
-	<div class="col col2 col-md-7">
-		<h3>Haven't registered yet?</h3>
+    <%= f.submit class: "btn btn-primary btn-wide", value: "Login" %>
+    <%= f.submit type: "reset", class: "btn btn-default btn-wide", value: "Clear" %>
+    <% end %>
+  </div>
+  <div class="col col2 col-md-7">
+    <h3>Haven't registered yet?</h3>
 
-		<p>To register, click this button <a class="btn btn-primary navbar-btn btn-sm" href="<%= signup_path %>">Sign up</a></p>
-	</div>
+    <p>To register, click this button <a class="btn btn-primary navbar-btn btn-sm" href="<%= signup_path %>">Sign up</a></p>
+  </div>
 </div>
