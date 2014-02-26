@@ -1,7 +1,12 @@
-<h1 id="site-title">Charity System Manager</h1>
+<div id="site-wrap">
+  <h1 id="site-title" class="wrap-text">Charity System Manager</h1>
 
-<p id="site-slogan">Create and manage your own charity websites.</p>
+  <p id="site-slogan" class="wrap-text">Create and manage your own charity websites.</p>
 
-<form id="signup-shortcut" action="register_charity" method="GET">
-  <input type="text" name="domain" class="form-control input-hg" placeholder="Enter the name of your charity here" spellcheck="false" />
-</form>
+  <form id="signup-shortcut" action="" method="GET">
+    <input type="text" name="org_name" class="form-control input-hg" placeholder="Search a charity" spellcheck="false" />
+  </form>
+
+  <p class="wrap-text">Have a charity, need a website? Click below to get your own.</p>
+  <%= link_to "GET STARTED", register_charity_path, id: "start-btn", class: "wrap-text btn btn-primary btn-embossed btn-lg" %>
+</div>
