@@ -7,6 +7,7 @@
 		"width" : 'auto',
 		"height": 400,
 		"btns"	: [
+			"header",
 			"bold",
 			"italic",
 			"underline",
@@ -50,26 +51,16 @@
 			self.replaceWith( editorDiv );
 			self = editorDiv;
 
-			self.CSMEditor( "_buildToolBar" )
-				.CSMEditor( "_addEventListeners" )
-				.CSMEditor( "_setCaretEl", self );
+			self.CSMEditor( "buildToolBar" )
+				.CSMEditor( "addEventListeners" )
+				.CSMEditor( "setCaretEl", self );
 		},
 
-		insertList: function( isOrdered ) {
-			var listType = ( isOrdered ) ? "ol" : "ul",
-				list 	 = $( document.createElement( listType )),
-				listItem = $( document.createElement( "li" ));
-
-			self.append( list ).append( listItem );
-
-			return self;
-		},
-
-		_exec: function( action, content ) {
+		exec: function( action, content ) {
 			document.execCommand( action, false, content );
 		},
 
-		_btnActive: function( btn ) {
+		btnActive: function( btn ) {
 			var btnClass = "btn-active";
 			if( btn.hasClass( btnClass )) {
 				btn.removeClass( btnClass );
@@ -78,7 +69,7 @@
 			}
 		},
 
-		_buildToolBar: function( ) {
+		buildToolBar: function( ) {
 			var el = $( document.createElement( "div" )).addClass( "btn-group" ).attr( "id", "csmeditor-toolbar" );
 
 			$.each( defaults.btns, function( index, btnVal ) {
@@ -87,6 +78,27 @@
 					icon 	 = $( document.createElement( "span" )).addClass( "glyphicon" ).attr( "title", btnVal );
 
 				switch( btnVal ) { // welp I have those bad-practice tingles writing this
+					case "header":
+						btn.html( "H" )
+							.addClass( "dropdown-toggle" )
+							.attr( "data-toggle", "dropdown" )
+							.append( $( "<span class=\"caret\"></span>" ))
+						icon = null;
+						btn = $( document.createElement( "div" )).addClass( "btn-group" )
+							.append( btn );
+
+						var dropdown = $( document.createElement( "ul" )).addClass( "dropdown-menu" );
+							
+						for( var i = 1; i <= 6; i++ ) {
+							var li = $( "<li><a href=\"javascript:void(0)\">H" + i + "</a></li>" );
+							li.click( function( ) {
+								self.CSMEditor( "exec", "formatBlock", "<H" + ( $( this ).index( ) + 1 ) + ">" );
+							});
+							li.appendTo( dropdown );
+						}
+
+						btn.append( dropdown ).appendTo( el );
+					break;
 					case "bold" :
 						icon.html( $( "<strong>B</strong>" ));
 					break;
@@ -126,13 +138,12 @@
 			el.insertBefore( self );
 		},
 
-		_addEventListeners: function( ) {
+		addEventListeners: function( ) {
 			self.keydown( function( e ) {
 			    // trap the return key being pressed
 			    if( ! e.shiftKey && e.which == 13 ) {
-				    self.find( "div" ).replaceWith( function( ) {
-					    return $( document.createElement( "p" )).html( $( this ).html( ));
-					});   
+			    	e.preventDefault( );
+				    $( this ).CSMEditor( "exec", "insertParagraph" );
 			    }
 			});
 
@@ -140,30 +151,40 @@
 				var index = $( this ).index( );
 				
 				switch( index ) { // goddamn more worrying switch statements
-					case 0:
-						self.CSMEditor( "_exec", "bold" );
-					break;
 					case 1:
-						self.CSMEditor( "_exec", "italic" );
+						self.CSMEditor( "exec", "bold" );
 					break;
 					case 2:
-						self.CSMEditor( "_exec", "underline" );
+						self.CSMEditor( "exec", "italic" );
 					break;
-					case 4:
-						self.CSMEditor( "insertList", false );
+					case 3:
+						self.CSMEditor( "exec", "underline" );
+					break;
+					case 5:
+						self.CSMEditor( "exec", "insertUnorderedList" );  
+					break;
+					case 6:
+						self.CSMEditor( "exec", "insertOrderedList" );
 					break;
 				}
 			});
 
 			$( "form" ).submit( function( ) {
+				self.CSMEditor( "validateInput" );
 				$( document.createElement( "input" )).attr({ "type" : "hidden", "name" : formName, "value" : self.html( ) }).appendTo( $( this ));
+			});
+		},
+
+		validateInput: function( ) {
+			self.find( "div" ).replaceWith( function( ) {
+			    return $( document.createElement( "p" )).html( $( this ).html( ));
 			});
 		},
 
 		// solution provided by Tim Down @ StackOverflow http://stackoverflow.com/questions/4233265/
 		// edited for plugin compatibility
 
-		_setCaretEl: function( el ) {
+		setCaretEl: function( el ) {
 			var that = el.get( 0 );
 			that.focus( );
 
