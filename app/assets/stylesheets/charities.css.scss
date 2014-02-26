@@ -129,6 +129,20 @@ div.blog-post {
 	}
 }
 
+.content {
+	ul, ol {
+		margin-left: 1em;
+	}
+
+	ul {
+		list-style-type: disc;
+	}
+
+	ol {
+		list-style-type: decimal;
+	}
+}
+
 //======== NEW ========//
 
 form {
