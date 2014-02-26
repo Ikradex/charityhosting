@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @user = User.new( get_post_params )
 
     if @user.save
-      sess_auth
+      sess_auth( @user )
       redirect_to charities_path
     else
       render 'new'
