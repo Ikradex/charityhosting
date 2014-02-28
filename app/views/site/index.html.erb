@@ -3,10 +3,14 @@
 
   <p id="site-slogan" class="wrap-text">Create and manage your own charity websites.</p>
 
-  <form id="signup-shortcut" action="" method="GET">
-    <input type="text" name="org_name" class="form-control input-hg" placeholder="Search a charity" spellcheck="false" />
-  </form>
+  <%= form_for :charity, :method => "GET", id: "signup-shortcut" do |f| %>
+  	<%= f.text_field :org_name, class: "form-control input-hg", placeholder: "Search a charity", spellcheck: "false" %>
+  <% end %>
 
   <p class="wrap-text">Have a charity, need a website? Click below to get your own.</p>
-  <%= link_to "GET STARTED", register_charity_path, id: "start-btn", class: "wrap-text btn btn-primary btn-embossed btn-lg" %>
+  <%= link_to "GET STARTED", register_path, id: "start-btn", class: "wrap-text btn btn-primary btn-embossed btn-lg" %><br /><br />
+
+  <p class="wrap-text">Made using</p>
+  <h2 class="wrap-text">Flat UI</h2>
+  <%= image_tag "logo.png", class: "wrap-text" %>
 </div>

@@ -19,6 +19,12 @@ class Charity < ActiveRecord::Base
   # for nested resources
   accepts_nested_attributes_for :account, :pages
 
+  def self.search( query )
+    if search
+      find( :all, :conditions => [ "org_name LIKE ?", "#{query}" ])
+    end
+  end
+
   # override to_param to show domain name instead of id
   # eg /charities/catactiontrust rather than /charities/1
   def to_param

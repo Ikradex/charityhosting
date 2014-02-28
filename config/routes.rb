@@ -8,7 +8,8 @@ CharitySystemManager::Application.routes.draw do
   get "/signup" => "users#new"
 
   #charities
-  get "/register_charity" => "charities#new"
+  get "/register" => "charities#new"
+  get "/charities/verify" => "charities#verify"
 
   #pages
   get "/charities/:charity_id/" => "pages#show"

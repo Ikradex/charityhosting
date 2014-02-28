@@ -31,8 +31,8 @@
   </fieldset>
   <fieldset>
     <%= fields_for @content do |content_fields| %>
-        <%= content_fields.text_area :content_src, class: "form-control editor", placeholder: "Write your content here!", style: "min-height: 300px" %>
-      <% end %>
+    <%= content_fields.text_area :content_src, class: "form-control editor", placeholder: "Write your content here!", style: "min-height: 300px" %>
+     <% end %>
   </fieldset>
   
   <input type="submit" name="submit" value="Save" class="btn btn-primary btn-wide" />
