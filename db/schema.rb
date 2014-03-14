@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140228171206) do
+ActiveRecord::Schema.define(version: 20140307115951) do
 
   create_table "accounts", force: true do |t|
     t.float    "income"
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 20140228171206) do
     t.integer "template"
     t.integer "charity_number"
     t.boolean "charity_number_verified"
+    t.string  "org_address"
+    t.string  "org_tel"
   end
 
   add_index "charities", ["account_id"], name: "index_charities_on_account_id"
@@ -109,13 +111,29 @@ ActiveRecord::Schema.define(version: 20140228171206) do
   add_index "posts", ["charity_id"], name: "index_posts_on_charity_id"
   add_index "posts", ["user_id"], name: "index_posts_on_user_id"
 
+  create_table "requests", force: true do |t|
+    t.string   "domain"
+    t.string   "org_name"
+    t.string   "email"
+    t.integer  "template"
+    t.integer  "charity_number"
+    t.boolean  "charity_number_verified"
+    t.string   "org_address"
+    t.string   "org_tel"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "approved"
+    t.string   "approval_token"
+  end
+
   create_table "users", force: true do |t|
-    t.string "email"
-    t.string "password_digest"
-    t.string "password"
-    t.string "password_confirmation"
-    t.string "f_name"
-    t.string "l_name"
+    t.string  "email"
+    t.string  "password_digest"
+    t.string  "password"
+    t.string  "password_confirmation"
+    t.string  "f_name"
+    t.string  "l_name"
+    t.boolean "is_admin"
   end
 
   create_table "videos", force: true do |t|

@@ -1,0 +1,52 @@
+<div class="page-header">
+  <h2>Admin <small>Logged in as: <%= @admin.f_name + " " + @admin.l_name %></small></h2>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Requests Pending</div>
+      <% if @requests_pending.size > 0 %>
+      
+      <div class="list-group">
+        <% @requests_pending.each do |req| %>
+          <a href="<%= admin_request_path( req ) %>" class="list-group-item">
+            <strong><%= req.org_name %></strong>
+          </a>
+        <% end %>
+      </div>
+      
+      <% else %>
+
+      <div class="panel-footer"><strong>No pending requests.</strong></div>
+      
+      <% end %>
+    </div>
+    <%= link_to "Manage requests", admin_requests_path, class: "btn btn-primary" %>
+	</div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Charities</div>
+      <% if @charities_validated.size > 0 %>
+      
+      <div class="list-group">
+        <% @charities_validated.each do |charity| %>
+
+          <a href="<%= admin_charity_path( charity ) %>" class="list-group-item">
+            <strong><%= charity.org_name %></strong>
+          </a>
+        <% end %>
+      </div>
+      
+      <% else %>
+
+      <div class="panel-footer"><strong>No validated charities yet.</strong></div>
+      
+      <% end %>
+    </div>
+    <%= link_to "Manage requests", admin_charities_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
+
+

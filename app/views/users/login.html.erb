@@ -2,22 +2,33 @@
   <div class="col col1 col-md-5">
     <h3>Login</h3>
 
-    <%= form_for :user, url: { action: "login", return: params[ :return ] } do |f| %>
-    <fieldset>
-      <%= f.label :email, "Email address" %>
-      <%= f.text_field :email, class: "form-control", placeholder: "Email" %>
+    <% if !flash[ :login ].nil? %>
+      <p class="text-danger"><%= flash[ :login ] %></p>
+    <% end %>
 
-      <%= f.label :password, "Password" %>
-      <%= f.text_field :password, type: "password", class: "form-control", placeholder: "Password" %>
+    <%= form_for :user, url: { action: "login", return: params[ :return ] } do |f| %>
+
+    <fieldset>
+      <div class="form-group">
+        <%= f.label :email, "Email address" %>
+        <%= f.text_field :email, class: "form-control", placeholder: "Email" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password, "Password" %>
+        <%= f.text_field :password, type: "password", class: "form-control", placeholder: "Password" %>
+      </div>
     </fieldset>
 
     <%= f.submit class: "btn btn-primary btn-wide", value: "Login" %>
     <%= f.submit type: "reset", class: "btn btn-default btn-wide", value: "Clear" %>
+    
     <% end %>
   </div>
   <div class="col col2 col-md-7">
     <h3>Haven't registered yet?</h3>
 
-    <p>To register, click this button <a class="btn btn-primary navbar-btn btn-sm" href="<%= signup_path %>">Sign up</a></p>
+    <p>To register, click the button below to sign up.</p>
+    <%= link_to "Register", register_path, class: "btn btn-primary btn-embossed btn-lg btn-wide" %>
   </div>
 </div>

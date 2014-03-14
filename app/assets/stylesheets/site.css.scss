@@ -1,77 +1,185 @@
-html, body {
-    background: image-url('main-bg.jpg');
-    background-position: fixed;
+/*=============================
+Chris Twomey
+Application-wide stylesheet for www.charityhosting.ie
+
+We're using SASS (SCSS) here
+
+swatch colours
+---------------
+
+Dark Slate Gray #34495E
+Light Sea Green #1ABC9C
+
+---------------
+sections
+---------------
+
+ - variables
+ - structure
+
+---------------
+3 February 2014
+=============================*/
+
+/*=============================
+    VARIABLES
+=============================*/
+
+$font-main: #333;
+$darkslategray: #34495e;
+$lightseagreen: #1abc9c;
+$lighterseagreen: #1acc9c;
+
+$border-gray: rgba( 180, 180, 180, 0.6 );
+
+/*=============================
+    STRUCTURE
+=============================*/
+
+#inner-wrap {
+	min-height: 500px;
 }
 
-h1, h2, h3, h4, h5, h6,
-p#site-slogan, input, button,
-nav.navbar-default ul.nav li a {
-	color: #FFF;
-} 
-
-nav.navbar-default a.navbar-brand {
-	color: #1abc9c;
+.alert.alert-overhead {
+	position: fixed !important;
+	width: 40%;
+	left: 30%;
+	opacity: 0.95;
+	margin: 1em auto;
+	text-align: center;
+	z-index: 1000 !important;
+	transition: opacity 2s ease-in-out;
+	-webkit-transition: opacity 2s ease-in-out;
+	-moz-transition: opacity 2s ease-in-out;
+	-o-transition: opacity 2s ease-in-out;
 }
 
-header {
-    nav.navbar-default {
-        display: block;
-        margin: 0.2em auto;
-        width: 90%;
-        background: transparent;
-        border-radius: 0;
-        border-bottom: 1px solid rgba( 180, 180, 180, 0.5 );
-    }
+//======== INDEX ========//
+
+div.charity-summary {
+	padding: 1em;
+	border-bottom: 1px solid $border-gray;
+
+	.site-logo {
+		width: 150px;
+		height: 150px;
+	}
 }
 
-#site-wrap {
-    display: block;
-    margin: 0 auto;
-    width: 80%;
 
-    .wrap-text {
-        display: block;
-        margin: 0.4em auto;
-        text-align: center;
-        color: #FFF !important;
-        text-shadow: 1px 1px 6px #222;
-    }
+//======== SHOW ========//
 
-    img.wrap-text {
-        max-width: 150px;
-    }
+#site-masthead {
+	position: relative;
+	padding: 1em 1em;
+	height: 300px;
+	margin-bottom: 1em;
+	text-shadow: 1px 1px 6px #222;
+	box-shadow: 0px 2px 8px #BABABA;
+	border-radius: 2px;
+	border-bottom: 1px solid $border-gray;
+	background: image-url( "main-bg.jpg" );
 
-    h1#site-title {
-        margin-top: 1em;
-    }
+	.masthead-header {
+		a {
+			color: #FFF;
+		}
+		padding: 0;
+		margin: 0;
+	}
 
-    p#site-slogan {
-        font-style: italic;
-    }
+	.header-alt {
+		color: $lightseagreen;
+	}
 
-    a#start-btn {
-        display: inherit;
-        width: 250px;
-        margin: 2em auto;
-        text-shadow: 1px 1px 6px #222;
-    }
-
-    form {
-        display: block;
-        margin: 2em auto;
-        width: 50%;
-
-        input {
-            color: #FFF !important;
-            text-align: center;
-            background: transparent !important;   
-        }
-    }
+	img.site-logo {
+		position: absolute;
+		left: 30px;
+		bottom: -30px;
+		height: 150px;
+		width: 150px;
+	}
 }
 
-form {
-    input, button {
-        color: #FFF !important;
-        background: transparent !important;
-    }
+.site-logo {
+	border-radius: 1px solid #333;
+	border-radius: 50%;
+	background-color: #FFF;
+}
+
+#site-nav {
+	ul {
+		li {
+			//
+		}
+
+		li:hover {
+			border-bottom: 2px solid $lighterseagreen;
+		}
+
+		li.current {
+			border-bottom: 2px solid $lightseagreen;
+		}
+	}		
+}
+
+div.row {
+	div.col {
+		border-right: 1px solid $border-gray;
+	}
+}
+
+div.blog-post {
+	div.blog-header {
+		border-bottom: 1px solid $border-gray;
+	}
+
+	a.thumbnail {
+		margin: 0.5em 1em;
+	}
+
+	a.thumbnail:nth-of-type(odd) {
+		float: right;
+	}
+
+	a.thumbnail:nth-of-type(even) {
+		float: left;
+	}
+}
+
+.content {
+	min-height: 200px;
+	
+	/*ul, ol {
+		margin-left: 1em;
+	}
+
+	ul {
+		list-style-type: disc;
+	}
+
+	ol {
+		list-style-type: decimal;
+	}*/
+}
+
+#admin-panel.fixed {
+	position: fixed;
+	width: 100%;
+	z-index: 500;
+	box-shadow: 0px 4px 8px rgba( 100, 100, 100, 0.05 );
+	top: 0px;
+	left: 0px;
+	border-radius: 0px;
+}
+
+//======== STRUCTURE ========//
+
+footer {
+	clear: both;
+	float: none;
+	padding: 2em;
+	height: 200px;
+	box-shadow: inset 0px 4px 6px #111;
+	background: $darkslategray - #333;
 }

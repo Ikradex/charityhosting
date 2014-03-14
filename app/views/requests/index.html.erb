@@ -1,0 +1,101 @@
+<div class="page-header">
+  <ol id="admin-panel" class="breadcrumb">
+    <li><%= link_to "Admin", admin_index_path %></li>
+    <li class="active">Requests</li>
+  </ol>
+  <h2>Requests <small>Logged in as: <%= @admin.f_name + " " + @admin.l_name %></small></h2>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Pending</div>
+      <% if @requests_pending.size > 0 %>
+      
+      <div class="list-group">
+        <% @requests_pending.each do |req| %>
+          <div class="list-group-item">
+            <div class="row">
+              <div class="col-md-8">
+              <strong><%= req.org_name %></strong>
+              </div>
+              <div class="col-md-4">
+                <%= link_to "Reject", admin_request_path( req, :approve => false ), class: "btn btn-sm btn-danger" %>
+                <%= link_to "Review", admin_request_path( req ), class: "btn btn-sm btn-primary" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      
+      <% else %>
+
+      <div class="panel-footer"><strong>No pending requests.</strong></div>
+      
+      <% end %>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Approved</div>
+
+      <% if @requests_approved.size > 0 %>
+      
+      <div class="list-group">
+        <% @requests_approved.each do |req| %>
+          <div class="list-group-item">
+            <div class="row">
+              <div class="col-md-8">
+              <strong><%= req.org_name %></strong>
+              </div>
+              <div class="col-md-4">
+                <% if !req.approved %>
+
+                <%= link_to "Cancel", admin_request_path( req ), method: :delete, data: { confirm: "*** Removing page: " + req.org_name + " ***\n\nAre you sure? All data for this charity will be deleted permanently." }, class: "btn btn-sm btn-danger" %>
+
+                <% end %>
+                <%= link_to "Review", admin_request_path( req ), class: "btn btn-sm btn-primary" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+      
+      <% else %>
+
+      <div class="panel-footer"><strong>No approved requests yet.</strong></div>
+      
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Charities</div>
+      <% if @charities.size > 0 %>
+      
+      <div id="request-list" class="list-group">
+        <% @charities.each do |charity| %>
+          <div class="list-group-item">
+            <div class="row">
+              <div class="col-md-8">
+              <strong><%= charity.org_name %></strong>
+              </div>
+              <div class="col-md-4">
+                <%= link_to "Delete", charity, method: :delete, data: { confirm: "*** Removing page: " + charity.org_name + " ***\n\nAre you sure? All data for this charity will be deleted permanently." }, class: "btn btn-sm btn-danger" %>
+                <%= link_to "Visit Site", charity, class: "btn btn-sm btn-primary" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      
+      <% else %>
+
+      <div class="panel-footer"><strong>No validated charities yet.</strong></div>
+      
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag "cp" %>

@@ -21,8 +21,10 @@ class UsersController < ApplicationController
   def logout
     # destroys all session cookies
     reset_session
+
+    flash[ :overhead ] = "You've logged out successfully"
     # return to previous page once logged out
-    redirect_to :back
+    redirect_to root_path
   end
 
   def authenticate
@@ -39,9 +41,10 @@ class UsersController < ApplicationController
 
       sess_auth( user )
 
-      return_link = params[ :return ] ? params[ :return ] : charities_path
-      redirect_to return_link
+      return_link = params[ :return ] ? params[ :return ] : root_path
+      redirect_to return_link, flash: { overhead: "You are now logged in" }
     else
+      flash[ :login ] = "Your email or password is incorrect."
       redirect_to :back
     end
   end

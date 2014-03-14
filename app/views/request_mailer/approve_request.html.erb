@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Request for: <%= @request.org_name %> approved.</h1>
+    <p>Congratulations, your request for <%= @request.org_name %> to be registered on our servers has just been approved. In a moment you'll be on your very own website dedicated to your charity.</p>
+
+    <% if ! @info.blank? %>
+    <span>------------------------------------------------------</span>
+
+    <p><strong>The system administrator has provided additional information relating to your request. It is important you read and understand it before validating your charity</strong></p>
+
+    <p><%= @info %></p>
+
+    <span>------------------------------------------------------</span>
+
+    <% end %>
+
+    <% url = charity_validate_path( :token => @request.approval_token, :only_path => false ) %>
+    
+    <p>To finish the registration process, please click this link<br /><br />
+    <%= link_to url, url %></p>
+
+    <p>If the link does not work try copy and pasting the url into the address bar.</p>
+  </body>
+</html>

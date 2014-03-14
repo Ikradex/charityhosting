@@ -1,0 +1,96 @@
+<div class="page-header">
+  <ol id="admin-panel" class="breadcrumb">
+    <li><%= link_to "Admin", admin_index_path %></li>
+    <li><%= link_to "Requests", admin_requests_path %></li>
+    <li class="active">Review</li>
+  </ol>
+
+  <h2>Request #<%= @request.id %>: <%= @request.org_name %></h2>
+  <% if !@request.approved %>
+    <%= link_to "Edit", edit_admin_request_path( @request ), class: "btn btn-info btn-wide" %>
+  <% end %>
+</div>
+
+<table class="table table-striped table-bordered">
+  <tbody>
+    <tr><th style="width: 100px">Created:</th><td><%= @request.created_at.to_formatted_s( :long ) %></td></tr>
+    <% if @request.updated_at > @request.created_at %> 
+    <tr><th style="width: 100px">Updated:</th><td><%= @request.updated_at.to_formatted_s( :long ) %></td></tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Is verified</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Telephone</th>
+        <th>Domain</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @request.charity_number %></td>
+        <td <%= ( @request.charity_number_verified ) ? "class=success" : "class=danger" %>><%= ( @request.charity_number_verified ) ? "yes" : "no" %></td>
+        <td><%= @request.org_name %></td>
+        <td><%= @request.org_address %></td>
+        <td><%= @request.email %></td>
+        <td><%= @request.org_tel %></td>
+        <td><%= @request.domain %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<% if !@request.charity_number_verified? %>
+
+<div class="alert alert-warning">
+  This charity has not been verified (<strong>#<%= @request.charity_number %></strong>). Please review the submitted charity number on <%= link_to "www.revenue.ie", "http://www.revenue.ie/en/business/authorised-charities-resident.html", class: "alert-link" %>.
+</div>
+
+<% flash.each do |key, error| %>
+  <div class="alert alert-danger"><%= error %></div>
+<% end %>
+
+<% end %>
+
+<% if !@request.approved %>
+
+<div class="row">
+  
+  <% if !params[ :approve ] %>
+
+  <div class="col-md-6">
+    <%= form_for :approve, url: { action: "approve" } do |f| %>
+      <%= f.label :info, "Add any other information for the user here." %>
+      <%= f.text_area :info, size: "40x10", class: "form-control" %><br />
+      <%= f.hidden_field :request_id, value: params[ :request_id ] %>
+      <%= f.submit "Approve", class: "btn btn-primary btn-embossed btn-lg" %>
+    <% end %>
+  </div>
+
+  <% end %>
+  <div class="col-md-6">
+    <%= form_for :reject, url: { action: "reject" } do |f| %>
+      <%= f.label :reason, "Please state a reason why this charity was not approved." %>
+      <%= f.text_area :reason, size: "40x10", class: "form-control" %><br />
+      <%= f.hidden_field :request_id, value: params[ :request_id ] %>
+      <%= f.submit "Reject", class: "btn btn-danger btn-embossed btn-lg" %>
+    <% end %>
+  </div>
+</div>
+
+<% else %>
+    
+  <div class="alert alert-success">
+    This charity has been approved. <%= link_to "Revoke", admin_request_path( @request ), class: "btn btn-sm btn-danger" %> 
+  </div>
+  
+<% end %>
+
+<%= javascript_include_tag "cp" %>

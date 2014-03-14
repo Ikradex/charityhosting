@@ -18,7 +18,9 @@
         title = "Home"
       end 
     %>
-    <li <%= params[ :id ] == page.title ? "class=current" : "" %>><%= link_to title.capitalize.tr( "_", " " ), charity_page_path( @charity, page ) %></li>
+    <li <%= params[ :id ] == page.title ? "class=current" : "" %>>
+      <%= link_to title.capitalize.tr( "_", " " ), charity_page_path( @charity, page ) %>
+    </li>
     <% end %>
   </ul>
 </nav>
@@ -26,7 +28,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col col1 col-md-9">
+    <div class="col col1 col-md-10">
       <div class="content">
         <% if !@content.nil? %>
         <%= raw @content.content_src %>
@@ -35,8 +37,10 @@
         <% end %>
       </div>
     </div>
-    <div class="col col2 col-md-3">
+    <div class="col col2 col-md-2">
 
     </div>    
   </div>
 </div>
+
+<%= javascript_include_tag "cp" %>

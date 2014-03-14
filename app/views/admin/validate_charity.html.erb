@@ -1,0 +1,138 @@
+<div class="page-header">
+  <h2><%= @request.org_name %> <small>Almost there!</small></h2>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Telephone</th>
+        <th>Domain</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @request.charity_number %></td>
+        <td><%= @request.org_name %></td>
+        <td><%= @request.org_address %></td>
+        <td><%= @request.email %></td>
+        <td><%= @request.org_tel %></td>
+        <td><%= @request.domain %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="well">
+  <h4 class="text-primary">Congratulations!</h4>
+
+  <p>Your charity has been approved and we've sent you here to do one last thing. We need some information for an account to relate to your charity. This way we can add secure login information so that only you are in control on what your charity website should be.</p>
+
+  <p>Once completed, your account will be created and you'll be redirected to your brand new charity website!</p>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <%= form_for :user do |f| %>
+      <%= f.hidden_field :approval_token, value: params[ :token ] %>
+
+      <% if @user.blank? or @user.email != @request.email %>
+        <!-- user form -->
+
+        <h4>Your account information.</h4>
+        <p class="text-info"><small>Fields marked by an asterisk(*) are required</small></p>
+
+        <% @form_errors.each do |msg| %>
+          <div class="alert alert-danger"><%= msg %></div>
+        <% end %>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <%= f.label :f_name, "What's your first name? *" %>
+              <%= f.text_field :f_name, required: true, minlength: 2, maxlength: 35, title: "Forename must be between 2 and 35 characters long.", class: "form-control", placeholder: "First name" %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <%= f.label :l_name, "What's your last name? *" %>
+              <%= f.text_field :l_name, required: true, minlength: 2, maxlength: 35, title: "Surname must be between 2 and 35 characters long.", class: "form-control", placeholder: "Last name" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <%= f.label :email, "What's your email address? *" %>
+              <%= f.text_field :email, required: true, minlength: 6, maxlength: 254, title: "Email must be between 6 and 254 characters long.", class: "form-control", placeholder: "Email" %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <%= f.label :email_confirmation, "Re-type your email address *" %>
+              <%= f.text_field :email_confirmation, required: true, minlength: 6, maxlength: 254, title: "Email must be between 6 and 254 characters long.", class: "form-control", placeholder: "Repeat your email" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <%= f.label :password, "Enter a password *" %>
+              <%= f.text_field :password, type: "password", required: true, minlength: 6, title: "Password must be at least 6 characters long.", class: "form-control", placeholder: "Password" %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <%= f.label :password_confirmation, "Re-type your password *" %>
+              <%= f.text_field :password_confirmation, type: "password", required: true, minlength: 6, title: "Password must be at least 6 characters long.", class: "form-control", placeholder: "Repeat your password" %>
+            </div>
+          </div>
+        </div>
+      <% else %>
+
+      <div class="alert alert-success">You're logged in as <strong><%= @user.f_name + " " + @user.l_name %></strong> (<%= @user.email %>)</div>
+
+      <% end %>
+
+      <%= f.submit "Validate Charity", class: "btn btn-primary" %>
+      <%= f.submit "Clear", type: "reset", class: "btn" %>
+
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <h4>Already have an account?</h4>
+
+    <p>Login instead of filling out the form.</p>
+
+    <h3>Login</h3>
+
+    <% if !flash[ :login ].nil? %>
+      <p class="text-danger"><%= flash[ :login ] %></p>
+    <% end %>
+
+    <%= form_for :user, url: { controller: "users", action: "login", return: request.url } do |f| %>
+
+    <fieldset>
+      <div class="form-group">
+        <%= f.label :email, "Email address" %>
+        <%= f.text_field :email, class: "form-control", placeholder: "Email" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password, "Password" %>
+        <%= f.text_field :password, type: "password", class: "form-control", placeholder: "Password" %>
+      </div>
+    </fieldset>
+
+    <%= f.submit class: "btn btn-primary btn-wide", value: "Login" %>
+    <%= f.submit type: "reset", class: "btn btn-default btn-wide", value: "Clear" %>
+    
+    <% end %>
+  </div>
+</div>

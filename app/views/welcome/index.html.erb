@@ -3,7 +3,7 @@
 
   <p id="site-slogan" class="wrap-text">Create and manage your own charity websites.</p>
 
-  <%= form_for :charity, :method => "GET", id: "signup-shortcut" do |f| %>
+  <%= form_for :charity, :method => "GET", url: charities_search_path, id: "signup-shortcut" do |f| %>
   	<%= f.text_field :org_name, class: "form-control input-hg", placeholder: "Search a charity", spellcheck: "false" %>
   <% end %>
 

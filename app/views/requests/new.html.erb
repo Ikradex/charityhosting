@@ -1,0 +1,137 @@
+<h2>Create your charity</h2>
+
+<p>Fill in this simple step-by-step form to make your request for a charity site. Once you're finished a request is sent to our system administrator who will then review your request. If your charity is approved your website will be automatically generated. You'll then be emailed your login credentials so you can begin sculpting your very own website for your charity.</p>
+
+<!-- charity form -->
+<%= form_for :request, html: { id: "request-form" } do |f| %>
+  <!-- progres bar -->
+  <div class="progress">
+    <div class="progress-bar" id="pb" style="width: 0%;"></div>
+    <div class="progress-bar progress-bar-info" style="width: 1%;"></div>  
+  </div><!-- /progress bar -->
+
+  <!-- bootstrap tab selection -->
+  <ul class="nav nav-tabs" id="step-selection">
+    <li><a href="#form-step-1" data-toggle="tab">Verification</a></li>
+    <li><a href="#form-step-2" data-toggle="tab">Charity</a></li>
+    <li><a href="#form-step-3" data-toggle="tab">Template</a></li>  
+    <li><a href="#form-step-4" data-toggle="tab">Finish</a></li>        
+  </ul><!-- /bootstrap tab selection -->
+
+  <div class="tab-content">
+    <!-- charity - number verification form -->
+    <div class="tab-pane fade" id="form-step-1">
+      <h4>Charity Number Verification</h4>
+      <p class="text-info"><small>Fields marked by an asterisk(*) are required</small></p>
+      <p>In order for your site to be approved, we'll need to check if your charity number is an <em>Authorised Resident Charity</em>, meaning the organisation must be <strong>recognised</strong> by the government as valid. Learn more about authorised charities <%= link_to "here.", "http://www.revenue.ie/en/business/authorised-charities-resident.html" %></p>
+
+      <p>All you have to do is enter it in the text box below and we'll verify the rest.</p>
+
+      <div class="form-group" id="verify-group">
+        <%= f.label :charity_number, "Charity Number *" %><br />
+        <%= f.text_field :charity_number, class: "form-control inline exclude-validation", placeholder: "Enter the charity number here." %>
+        <!-- field to fast-track admin approval for number verification -->
+        <%= f.text_field :charity_number_verified, type: "hidden", value: "false" %>
+
+        <button type="button" class="btn btn-info" id="num-verify-btn">Check</button>
+        <div id="verify-status">
+          <div class="progress progress-striped active">
+            <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+              <span class="sr-only">Verifying...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /charity - number verification form -->
+
+    <!-- charity - org info form -->
+    <div class="tab-pane fade" id="form-step-2">
+       <%= field_set_tag do %>
+        <h4>Organisation details.</h4>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= f.label :org_name, "What's your organisation? eg. Asthma Society of Ireland *" %>
+              <%= f.text_field :org_name, required: true, minlength: 2, maxlength: 240, title: "The charity name must be between 2 and 240 characters", class: "form-control", placeholder: "Name of organisation" %>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= f.label :org_address, "Main address of your organisation? *" %>
+              <%= f.text_field :org_address, minlength: 3, maxlength: 320, title: "The charity's address name must be between 3 and 320 characters", class: "form-control", placeholder: "Address of organisation" %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= f.label :email, "Its email address *" %>
+              <%= f.text_field :email, type: "email", required: true, minlength: 6, maxlength: 254, title: "Email must be between 6 and 254 characters long.", class: "form-control", placeholder: "Email of organisation" %>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= f.label :org_tel, "Its telephone number" %>
+              <%= f.text_field :org_tel, class: "form-control", placeholder: "Telephone of organisation" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <%= field_set_tag do %>
+        <h4>Charity domain</h4>
+
+        <p>Your charity &ldquo;domain&rdquo; or <i>namespace</i> is a unique identifier to your website on our system. For instance, if the charity Cork Cat Action Trust were to set up a website, their domain would likely be &ldquo;catactiontrust.&rdquo;</p>
+
+        <div class="form-group">
+          <%= f.label :domain, "If you do not like the auto-generated namespace, enter a custom one *" %>
+          <%= f.text_field :domain, class: "form-control", placeholder: "Enter your custom domain" %>
+        </div>
+      <% end %>
+
+    </div><!-- /charity - org info form -->
+
+    <!-- charity - template selection form -->
+    <div class="tab-pane fade" id="form-step-3">
+      <%= field_set_tag do %>
+        <h4>Choose a template.</h4>
+        <p>What template you choose will have a site-wide effect on how your website looks to your visitors. There are many templates to choose from below. Click the preview button to get a full screen demonstration.</p>
+
+        <div class="row">
+
+          <% 3.times do |i| %>
+            <% index = i + 1 %>
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <%= image_tag( "http://placehold.it/600x600", alt: "Template" ) %>
+                <h6>Theme <%= index %></h6>
+                <label class="radio">
+                  <%= radio_button( :request, "template", index, class: "template-radio", data: { toggle: "radio" }) %>
+                  Theme <%= index %>
+                </label>
+              </div>
+            </div>
+
+          <% end %>
+        </div>
+      <% end %>
+    </div><!-- /charity - template selection form -->
+
+    <!-- form summary -->
+    <div class="tab-pane fade" id="form-step-4">
+      <h4>Finishing up</h4>
+      <p>Please check what you've entered before submitting the form. Once you submit, the request will be sent to the system admin.<br />
+      <strong>Multiple duplicate requests cause delays for not only you but also for others.</strong></p>
+
+      <%= f.submit class: "btn btn-primary btn-wide", value: "Sign up" %>
+      <%= f.submit type: "reset", class: "btn btn-default", value: "Clear" %>
+    </div>
+  </div><!-- /form summary -->
+
+  <!-- tab navigation btns -->
+  <button type="button" class="btn tab-nav-btn" id="prev-btn"><span class="glyphicon glyphicon-chevron-left"></span></button>
+  <button type="button" class="btn tab-nav-btn" id="next-btn"><span class="glyphicon glyphicon-chevron-right"></span></button>
+<% end %>
+
+<%= javascript_include_tag "charity_form" %>

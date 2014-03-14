@@ -27,7 +27,7 @@ class PagesController < ApplicationController
   end
 
   def create
-    if session[ :auth ]
+    if session[ :auth ] and session[ :user_id ] == @charity.user_id
       @charity = Charity.where( domain: params[ :charity_id ] ).take
       @page = @charity.pages.create( get_page_params )
       @content = @page.create_content( get_content_params )
@@ -46,34 +46,47 @@ class PagesController < ApplicationController
 
   def edit
     @charity = Charity.where( domain: params[ :charity_id ] ).take
-    # get the charity's page to edit
-    @page = @charity.pages.where( title: params[ :id ] ).take
-    # get the page's content to edit
-    @content = @page.content
+
+    if session[ :auth ] and session[ :user_id ] == @charity.user_id
+      # get the charity's page to edit
+      @page = @charity.pages.where( title: params[ :id ] ).take
+      # get the page's content to edit
+      @content = @page.content
+    else
+      redirect_to @charity
+    end
   end
 
   def update
     @charity = Charity.where( domain: params[ :charity_id ] ).take
-    # we need to get the charity's page we're trying to update
-    @page = @charity.pages.where( title: params[ :id ] ).take
-    # get the page's content to update
-    @content = @page.content
 
-    if @page.update_attributes get_page_params and @content.update_attributes get_content_params
-      redirect_to charity_page_path( @charity, @page )
+    if session[ :auth ] and session[ :user_id ] == @charity.user_id
+      # we need to get the charity's page we're trying to update
+      @page = @charity.pages.where( title: params[ :id ] ).take
+      # get the page's content to update
+      @content = @page.content
+
+      if @page.update_attributes get_page_params and @content.update_attributes get_content_params
+        redirect_to charity_page_path( @charity, @page )
+      else
+        render "edit"
+      end
     else
-      render "edit"
+      redirect_to @charity
     end
   end
 
   def destroy
     charity = Charity.where( domain: params[ :charity_id ] ).take
-    page = Page.where( title: params[ :id ] ).take
 
-    # will change this to some destroy_enabled attribute
-    if page.title != "index"
-      # removes page from its table and any link it has on other tables (normal form)
-      page.destroy
+    if session[ :auth ] and session[ :user_id ] == @charity.user_id
+      page = Page.where( title: params[ :id ] ).take
+
+      # will change this to some destroy_enabled attribute
+      if page.title != "index"
+        # removes page from its table and any link it has on other tables (normal form)
+        page.destroy
+      end
     end
 
     redirect_to charity

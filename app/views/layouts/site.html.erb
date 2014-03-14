@@ -1,31 +1,88 @@
 <% content_for :content do %>
-<header>
-  <nav class="navbar navbar-default navbar-lg" role="navigation">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
-          <span class="sr-only">Toggle navigation</span>
-      </button>
-      <a class="navbar-brand" href="#">CSM</a>
+  <% if flash[ :overhead ].present? %>
+    <div class="alert alert-info alert-dismissable alert-overhead">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= flash[ :overhead ] %>
     </div>
-    <div class="collapse navbar-collapse" id="navbar-collapse-01">
-      <ul class="nav navbar-nav">           
-        <li><a href="charities/">Charities</a></li>
-        <li><a href="#fakelink">About</a></li>
-      </ul>
-      <a class="btn btn-primary navbar-btn btn-sm" href="<%= register_path %>">Sign up</a>
-      <form class="navbar-form navbar-right" action="#" role="search">
-        <div class="form-group">
-          <div class="input-group">
-            <input class="form-control" id="seach-inp" type="search" placeholder="Search">
-            <span class="input-group-btn">
-              <button type="submit" class="btn"><span class="fui-search"></span></button>
-            </span>            
-          </div>
-        </div>               
-      </form>
-    </div><!-- /.navbar-collapse -->
-  </nav>
-</header>
-<%= yield %>
+  <% end %>
+
+  <header>
+    <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+        </button>
+        <a class="navbar-brand" href="/">CSM</a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav">           
+          <li class="active"><%= link_to "Charities", charities_path %></li>
+          <li><a href="#fakelink">About</a></li>
+          <li><a href="#fakelink">Help</a></li>
+        </ul>
+        <form class="navbar-form navbar-left" action="charities/search" method="GET" role="search">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" name="charity[org_name]" id="search-inp" type="search" placeholder="Search">
+              <span class="input-group-btn">
+                <button type="submit" class="btn"><span class="fui-search"></span></button>
+              </span>            
+            </div>
+          </div>               
+        </form>
+        
+        <% if session[ :auth ]
+        @user = User.find( session[ :user_id ] ) %>
+  
+        <ul class="nav navbar-nav navbar-right">           
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= ( @user.is_admin ) ? "(Admin) " : "" %><%= @user.f_name + " " + @user.l_name %> <b class="caret"></b></a>
+            <span class="dropdown-arrow"></span>
+            <ul class="dropdown-menu">
+              <% if session[ :user_id ] == User.get_admin.id %>
+              <li><%= link_to "Admin", admin_index_path %></li>
+              <% end %>
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><%= link_to "Logout", logout_path %></li>
+            </ul>
+          </li>
+        </ul>
+
+        <% else %>
+        
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to "Login", login_path( :return => request.url ) %></li>
+          <li><%= link_to "Register", register_path %></li>
+        </ul>
+        <% end %> 
+      </div><!-- /.navbar-collapse -->
+    </nav><!-- /navbar -->
+  </header>
+  <div id="inner-wrap">
+    <%= yield %>
+  </div>
+  <footer>
+    <div class="row">
+      <div class="col-md-2">
+        <h6 class="footer-header">SITEMAP</h6>
+        <ul>
+          <li><a href="#">Dummy Link</a></li>
+          <li><a href="#">Dummy Link</a></li>
+          <li><a href="#">Dummy Link</a></li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <h6 class="footer-header">SITEMAP</h6>
+        <ul>
+          <li><a href="#">Dummy Link</a></li>
+          <li><a href="#">Dummy Link</a></li>
+          <li><a href="#">Dummy Link</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 <% end %>
 <%= render template: "layouts/application" %>

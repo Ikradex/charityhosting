@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Request: <%= @request.org_name %></h1>
+    <p>A request for a charity to be made under CSM has been made.</p>
+
+    <h2>Charity information</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Verified</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Email</th>
+          <th>Telephone</th>
+          <th>Domain</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @request.charity_number %></td>
+          <td><%= ( @request.charity_number_verified ) ? "yes" : "no" %>
+          <td><%= @request.org_name %></td>
+          <td><%= @request.org_address %></td>
+          <td><%= @request.email %></td>
+          <td><%= @request.org_tel %></td>
+          <td><%= @request.domain %></td>
+        </tr>
+      </tbody> 
+    </table>
+
+    <% admin_url = admin_request_path( @request, :only_path => false ) %>
+    <p>View request: <%= link_to admin_url, admin_url %></p>
+  </body>
+</html>

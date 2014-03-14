@@ -11,66 +11,84 @@ class CharitiesController < ApplicationController
     @content = @page.build_content
   end
 
-  def create
-    # if logged in
-    #if session[ :auth ]
-    # the index page of the site
-    init_page_title = "index"
-    init_page_content = "<h1>This is your new charity page!</h1><p>On your control panel, go to \"Pages\" and \"Edit\" to edit this page or add more pages to your website.</p>"
-    user_id = 0;
+  def edit
+  end
 
-    if params[ :user ]
-      @user = User.create( get_user_params )
-      @user.save!
+  def update
+  end
 
-      user_id = @user.id
-      session[ :user_id ] = user_id
-      session[ :auth ] = true
+  def destroy
+    @charity = Charity.where( domain: params[ :id ] ).take
+
+    if session[ :auth ] and session[ :user_id ] == User.get_admin.id
+      @charity.destroy
+      
+      redirect_to :back
     else
-      user_id = session[ :user_id ]
+      redirect_to login_path
     end
-
-    @charity = Charity.new( get_charity_params )
-    @charity.user_id = user_id
-
-    if @charity.save
-      @page = @charity.pages.create( :title => init_page_title )
-      # ! indicates that the variable has being modified
-      @page.save!
-      @content = @page.create_content( :content_src => init_page_content )
-      @content.save!
-
-      redirect_to @charity
-    else
-      render 'new'
-    end
-    #else
-    # redirect user back to login page with a reference to return to this page again
-    #redirect_to login_path( :return => request.url )
-    #end
   end
 
   def search
-    render text: params.inspect
-    #@charities = Charity.search( params.require( :charity ).permit( :search ))
-    #render 'index'
+    @charities = Charity.search( params[ :charity ][ :org_name ] )
+    render 'index'
   end
 
   def verify
+    require "open-uri"
+    require "nokogiri"
+    require "timeout"
+    
+    # the charity number the user provides
     number_to_verify = params[ :charity_number ]
 
+    # the page to scrape
     url = "http://www.revenue.ie/en/business/authorised-charities-resident.html"
     json = { status: "no-list" }
 
-    require "open-uri"
-    doc = Nokogiri::HTML( open( url ))
-    doc.css( "tr" ).each do |row|
-      if row.css( "td:nth-child(1)" ).text == number_to_verify
-        json = { status: "okay", id: row.css( "td:nth-child(1)" ).text, org_name: row.css( "td:nth-child(2)" ).text, address: row.css( "td:nth-child(3)" ).text }
+    # check if number has already been used
+    charity = Charity.where( charity_number: number_to_verify ).take
+    if charity.blank?
+      begin
+        # break after 10 seconds
+        timeout( 10 ) do
+          # get webpage
+          doc = Nokogiri::HTML( open( url ))
+
+          # get rows of the table
+          doc.css( "tr" ).each do |row|
+            if row.css( "td:nth-child(1)" ).text == number_to_verify
+              # success!
+              json = { 
+                status: "okay", 
+                id: row.css( "td:nth-child(1)" ).text, 
+                org_name: row.css( "td:nth-child(2)" ).text, 
+                address: row.css( "td:nth-child(3)" ).text 
+              }
+            end
+          end
+        end
+      rescue Timeout::Error
+        json = {
+          status: "504",
+          error: "connection timeout"
+        }
       end
+    else
+      # this charity exists, however has already in use
+      json = { 
+        status: "taken",
+        org_name: charity.org_name
+      }
     end
 
     render :json => json.to_json
+  end
+
+  def domain_check
+    domain_to_check = params[ :domain ]
+    rows_returned = Charity.where( domain: domain_to_check ).length
+    render :json => { status: "okay", rows: rows_returned }.to_json
   end
 
   private
@@ -78,7 +96,7 @@ class CharitiesController < ApplicationController
   # required by Rails
 
   def get_charity_params
-    params.require( :charity ).permit( :domain, :org_name, :email, :template )
+    params.require( :charity ).permit( :domain, :org_name, :org_address, :org_tel, :charity_number, :charity_number_verified, :email, :template )
   end
 
   def get_user_params
