@@ -1,24 +1,31 @@
 class CharitiesController < ApplicationController
   def index
     @charities = Charity.all
+    render layout: "site"
+  end
+
+  def show
+    @charity = Charity.find_by_domain( params[ :charity_id ] )
+    @pages = @charity.pages
+    @posts = @charity.posts.limit( 3 )
+    @animals = @charity.animals.last( 3 )
+    @user = @charity.user
   end
 
   def new
     @charity = Charity.new
     # create a page relating to the charity id
-    @page = @charity.pages.build
-    # create content relating to the page id
-    @content = @page.build_content
   end
 
   def edit
+    @charity = Charity.find_by_domain( params[ :id ] )
   end
 
   def update
   end
 
   def destroy
-    @charity = Charity.where( domain: params[ :id ] ).take
+    @charity = Charity.find_by_domain( params[ :id ] )
 
     if session[ :auth ] and session[ :user_id ] == User.get_admin.id
       @charity.destroy
@@ -26,6 +33,17 @@ class CharitiesController < ApplicationController
       redirect_to :back
     else
       redirect_to login_path
+    end
+  end
+
+  def lost_and_found
+    @charity = Charity.find_by_domain( params[ :charity_id ] )
+    @pages = @charity.pages
+
+    if request.post?
+
+    else
+      
     end
   end
 

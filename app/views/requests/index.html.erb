@@ -20,8 +20,10 @@
               <strong><%= req.org_name %></strong>
               </div>
               <div class="col-md-4">
-                <%= link_to "Reject", admin_request_path( req, :approve => false ), class: "btn btn-sm btn-danger" %>
-                <%= link_to "Review", admin_request_path( req ), class: "btn btn-sm btn-primary" %>
+                <div class="btn-group">
+                  <%= link_to "Reject", admin_request_path( req, :approve => false ), class: "btn btn-sm btn-danger" %>
+                  <%= link_to "Review", admin_request_path( req ), class: "btn btn-sm btn-primary" %>
+                </div>
               </div>
             </div>
           </div>
@@ -48,12 +50,14 @@
               <strong><%= req.org_name %></strong>
               </div>
               <div class="col-md-4">
-                <% if !req.approved %>
+                <div class="btn-group">
+                  <% if !req.approved %>
 
-                <%= link_to "Cancel", admin_request_path( req ), method: :delete, data: { confirm: "*** Removing page: " + req.org_name + " ***\n\nAre you sure? All data for this charity will be deleted permanently." }, class: "btn btn-sm btn-danger" %>
+                  <%= link_to "Cancel", admin_request_path( req ), method: :delete, data: { confirm: "*** Removing page: " + req.org_name + " ***\n\nAre you sure? All data for this charity will be deleted permanently." }, class: "btn btn-sm btn-danger" %>
 
-                <% end %>
-                <%= link_to "Review", admin_request_path( req ), class: "btn btn-sm btn-primary" %>
+                  <% end %>
+                  <%= link_to "Review", admin_request_path( req ), class: "btn btn-sm btn-primary" %>
+                </div>
               </div>
             </div>
           </div>
@@ -81,8 +85,10 @@
               <strong><%= charity.org_name %></strong>
               </div>
               <div class="col-md-4">
-                <%= link_to "Delete", charity, method: :delete, data: { confirm: "*** Removing page: " + charity.org_name + " ***\n\nAre you sure? All data for this charity will be deleted permanently." }, class: "btn btn-sm btn-danger" %>
-                <%= link_to "Visit Site", charity, class: "btn btn-sm btn-primary" %>
+                <div class="btn-group">
+                  <%= link_to "Delete", charity, method: :delete, data: { confirm: "*** Removing page: " + charity.org_name + " ***\n\nAre you sure? All data for this charity will be deleted permanently." }, class: "btn btn-sm btn-danger" %>
+                  <%= link_to "Visit Site", charity, class: "btn btn-sm btn-primary" %>
+                </div>
               </div>
             </div>
           </div>
@@ -97,5 +103,3 @@
     </div>
   </div>
 </div>
-
-<%= javascript_include_tag "cp" %>

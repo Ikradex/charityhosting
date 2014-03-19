@@ -1,1 +1,4 @@
-<%= render template: "layouts/charities" %>
+<% content_for :head do %>
+<%= stylesheet_link_tag "charities", media: "all", "data-turbolinks_track" => true %>
+<% end %>
+<%= render template: "layouts/site" %>

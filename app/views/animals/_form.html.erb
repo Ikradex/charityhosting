@@ -1,0 +1,74 @@
+<%= form_for([ @charity, @animal ] ) do |f| %>
+  <% if @animal.errors.any?
+    @animal.errors.full_messages.each do |error| %>
+      <div class="alert alert-danger"><%= error %></div>
+    <% end %>
+  <% end %>
+
+	<div class="row">
+		<div class="col-md-8">
+      <p class="text-info"><small>Fields marked by an asterisk(*) are required</small></p>
+
+      <div class="form-group">
+  			<%= f.label :name, "Name of the animal *" %>
+  			<%= f.text_field :name, placeholder: "Name", class: "form-control", required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :species, "Species of animal *" %>
+        <%= f.text_field :species, placeholder: "Species", class: "form-control", required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :breed, "Breed of the species" %>
+        <%= f.text_field :breed, placeholder: "Breed", class: "form-control" %>
+      </div>
+			
+      <div class="form-group">
+        <%= f.label :description, "Give a short description of the animal (160 characters left) *" %>
+        <%= f.text_area :description, placeholder: "Description", class: "form-control", size: "40x10", required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :owner_email, "Email for adoption enquiries. Defaults to charity admin email if none supplied." %>
+        <%= f.text_field :owner_email, type: "email", placeholder: "Email", class: "form-control" %>
+      </div>
+			
+      <div class="form-group">
+  			<label class="checkbox" for="animal_can_adopt">
+          <%= f.check_box :can_adopt %>
+          Animal can be adopted?
+  			</label>
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox" for="animal_can_sponsor">
+          <%= f.check_box :can_sponsor %>
+          Animal can be sponsored?
+        </label>
+      </div>
+		</div>
+		<div class="col-md-4">
+			<img src="http://placehold.it/295x300" alt="Animal's photo" />
+			<%= link_to "Upload photo", "#", class: "btn btn-info btn-block" %>
+		</div><br />
+	</div>
+
+  <%= f.submit "Save", class: "btn btn-primary btn-wide" %>
+  <%= f.submit "Clear", type: "reset", class: "btn" %>
+<% end %>
+
+<%= javascript_include_tag "flatui/flatui-checkbox" %>
+<script type="text/javascript">
+    var ready = function( ) {
+      // init flatui checkboxes
+    $( ":checkbox" ).checkbox( );
+
+    // alert user of fields which haven't passed validation
+    $( ".field_with_errors" ).parent( ).addClass( "has-error" );
+  }
+
+  // this is a turbolinks fix as the ready event is not called on ajax requests
+  $( document ).ready( ready );
+  $( document ).on( 'page:load', ready );
+</script>

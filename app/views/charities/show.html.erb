@@ -1,0 +1,67 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag "posts", media: "all", "data-turbolinks_track" => true %>
+<% end %>
+
+<div class="page-header">
+	<h1><%= @charity.org_name %></h1>
+</div>
+
+<% if @posts.any? %>
+<div id="blog-posts">
+	<h2 class="text-primary">Blog</h2>
+	<% @posts.each do |post| %>
+		<article class="blog-post">
+			<h3><%= post.title %></h3>
+
+			<small class="text-primary">By <%= @user.f_name + " " + @user.l_name %> &bull; <%= post.created_at.to_formatted_s( :short ) %></small>
+		  <% if ( post.updated_at - post.created_at ) > 1.second %>
+		    <br /><small class="text-info">Updated: <%= post.updated_at.to_formatted_s( :short ) %></small>
+		  <% end %>
+
+		  <p>
+				<%= post.summary %>
+			</p>
+			
+			<%= link_to "Read", charity_post_path( @charity, post ), class: "btn btn-info btn-wide" %>
+		</article>
+	<% end %>
+</div>
+
+<% end %>
+
+<% if @animals.any? %>
+	<div id="animals">
+		<h2 class="text-primary">Animals</h2>
+		<div class="row">
+			<% @animals.each do |animal| %>
+	      <div class="thumbnail-col col-xs-12 col-sm-6 col-md-4">
+	        <div class="thumbnail">
+	          <img src="http://placehold.it/300x275" alt="...">
+	          <div class="caption">
+	            <h4><%= animal.name %></h4>
+	            <small class="text-info">
+	              <%= animal.species %>
+
+	              <% if animal.breed.present? %>
+	                &bull; <%= animal.breed %>
+	              <% end %>
+	            </small>
+	            <p class="desc"><small><%= animal.description %></small></p>
+	            <div class="btn-group">
+	              <%= link_to "View", charity_animal_path( @charity, animal ), class: "btn btn-primary" %>
+
+	              <% if animal.can_sponsor? %>
+	                <%= link_to "Sponsor", "#", class: "btn btn-info" %>
+	              <% end %>
+
+	              <% if animal.can_adopt? %>
+	                <%= link_to "Adopt", adopt_charity_animal_path( @charity, animal ), class: "btn btn-success" %>
+	              <% end %>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    <% end %>
+		</div>
+	</div>
+<% end %>

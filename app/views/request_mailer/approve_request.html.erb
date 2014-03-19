@@ -4,8 +4,8 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Request for: <%= @request.org_name %> approved.</h1>
-    <p>Congratulations, your request for <%= @request.org_name %> to be registered on our servers has just been approved. In a moment you'll be on your very own website dedicated to your charity.</p>
+    <h1>Request for: &ldquo;<%= @request.org_name %>&rdquo; approved.</h1>
+    <p>Congratulations, your request for <strong>&ldquo;<%= @request.org_name %>&rdquo;</strong> to be registered on our servers has just been approved. In a moment you'll be on your very own website dedicated to your charity.</p>
 
     <% if ! @info.blank? %>
     <span>------------------------------------------------------</span>

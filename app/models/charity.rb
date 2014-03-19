@@ -2,6 +2,8 @@ class Charity < ActiveRecord::Base
   belongs_to :user
   has_one :account
   has_many :pages
+  has_many :animals
+  has_many :posts
 
   before_save { self.domain = domain.downcase }
 
@@ -14,7 +16,8 @@ class Charity < ActiveRecord::Base
     length: { minimum: 6, maximum: 320 }
   # organisation name, required, must be of length between 2 and 240 characters
   validates :org_name, presence: true, 
-    length: { in: 2..240 }
+    length: { in: 2..240 },
+    uniqueness: true
   # site template, required, must be of value 1, 2 or 3
   validates :template, presence: true, 
     inclusion: { in: 1..3 },

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140307115951) do
+ActiveRecord::Schema.define(version: 20140319135210) do
 
   create_table "accounts", force: true do |t|
     t.float    "income"
@@ -20,26 +20,32 @@ ActiveRecord::Schema.define(version: 20140307115951) do
   end
 
   create_table "animals", force: true do |t|
-    t.string  "name"
-    t.string  "species"
-    t.string  "breed"
-    t.boolean "can_adopt"
-    t.integer "charity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "can_sponsor"
+    t.text     "description"
+    t.integer  "image_id"
+    t.integer  "charity_id"
+    t.boolean  "can_adopt"
+    t.string   "name"
+    t.string   "species"
+    t.string   "breed"
+    t.string   "owner_email"
   end
 
-  add_index "animals", ["charity_id"], name: "index_animals_on_charity_id"
-
   create_table "charities", force: true do |t|
-    t.string  "domain"
-    t.string  "org_name"
-    t.integer "user_id"
-    t.integer "account_id"
-    t.string  "email"
-    t.integer "template"
-    t.integer "charity_number"
-    t.boolean "charity_number_verified"
-    t.string  "org_address"
-    t.string  "org_tel"
+    t.string   "domain"
+    t.string   "org_name"
+    t.integer  "user_id"
+    t.integer  "account_id"
+    t.string   "email"
+    t.integer  "template"
+    t.integer  "charity_number"
+    t.boolean  "charity_number_verified"
+    t.string   "org_address"
+    t.string   "org_tel"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "charities", ["account_id"], name: "index_charities_on_account_id"
@@ -81,21 +87,12 @@ ActiveRecord::Schema.define(version: 20140307115951) do
     t.string "mime_type"
   end
 
-  create_table "lost_cases", force: true do |t|
-    t.string  "owner_email"
-    t.string  "animal_name"
-    t.integer "image_id"
-    t.integer "video_id"
-  end
-
-  add_index "lost_cases", ["image_id"], name: "index_lost_cases_on_image_id"
-  add_index "lost_cases", ["video_id"], name: "index_lost_cases_on_video_id"
-
   create_table "pages", force: true do |t|
     t.string  "title"
     t.integer "charity_id"
     t.integer "content_id"
     t.boolean "edit_disabled"
+    t.boolean "editable"
   end
 
   add_index "pages", ["charity_id"], name: "index_pages_on_charity_id"
@@ -106,6 +103,10 @@ ActiveRecord::Schema.define(version: 20140307115951) do
     t.datetime "timestamp"
     t.integer  "charity_id"
     t.integer  "user_id"
+    t.text     "post_content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "summary"
   end
 
   add_index "posts", ["charity_id"], name: "index_posts_on_charity_id"
@@ -124,6 +125,13 @@ ActiveRecord::Schema.define(version: 20140307115951) do
     t.datetime "updated_at"
     t.boolean  "approved"
     t.string   "approval_token"
+  end
+
+  create_table "table_lost_cases", force: true do |t|
+    t.string  "owner_email"
+    t.string  "animal_name"
+    t.string  "description"
+    t.integer "image_id"
   end
 
   create_table "users", force: true do |t|

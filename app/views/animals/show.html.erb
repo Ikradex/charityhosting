@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h1><%= @animal.name %> </h1>
+  <p class="text-primary">
+    <%= @animal.species %>
+
+    <% if @animal.breed.present? %>
+      &bull; <%= @animal.breed %>
+    <% end %>
+  </p>
+
+  <%= link_to "Return to gallery", charity_animals_path, class: "btn btn-info" %>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <img src="http://placehold.it/450x350" alt="<%= @animal.name %>" />
+  </div>
+  <div class="col-md-6">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <tbody>
+          <tr><th>Name</th><td><%= @animal.name %></td></tr>
+          <tr><th>Species</th><td><%= @animal.species %></td></tr>
+          <% if @animal.breed.present? %>
+            <tr><th>Breed</th><td><%= @animal.breed %></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <p id="animal-desc"><%= @animal.description %></p>
+
+    <p>Contact: <strong><%= @charity.user.email %></strong></p>
+
+    <% if @animal.can_sponsor? %>
+      <%= link_to "Sponsor", "#", class: "btn btn-embossed btn-wide btn-info" %>
+    <% end %>
+
+    <% if @animal.can_adopt? %>
+      <%= link_to "Adopt", adopt_charity_animal_path( @charity, @animal ), class: "btn btn-embossed btn-wide btn-success" %>
+    <% end %>
+  </div>
+</div>

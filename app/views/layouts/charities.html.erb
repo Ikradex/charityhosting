@@ -1,4 +1,49 @@
 <% content_for :head do %>
 <%= stylesheet_link_tag params[ :controller ], media: "all", "data-turbolinks-track" => true %>
-<% end %> 
+<%= javascript_include_tag "cp" %>
+<% end %>
+
+<% content_for :site_content do %>
+  <% if session[ :auth ] and session[ :user_id ] == @charity.user_id %>
+    <%= render "charities/cp" %>
+  <% end %>
+
+  <div id="site-masthead">
+    <h1 class="masthead-header"><%= link_to @charity.org_name, charity_path( @charity ) %></h1>
+    <img class="site-logo avatar" src="http://placehold.it/150x150" alt="Site logo" />
+  </div>
+
+  <nav id="site-nav" class="navbar" role="navigation">
+    <ul class="nav navbar-nav">
+      <li <%= params[ :controller ] == "charities" ? "class=current" : "" %>><%= link_to "Home", charity_path( @charity ) %></li>
+      <li <%= params[ :controller ] == "animals" ? "class=current" : "" %>><%= link_to "Animals", charity_animals_path %></li>
+      <li <%= params[ :controller ] == "posts" ? "class=current" : "" %>><%= link_to "Blog", charity_posts_path %></li>
+      <li <%= params[ :controller ] == "charges" ? "class=current" : "" %>><%= link_to "Lost & Found", charity_lost_and_found_path( @charity ) %></li>
+      <li <%= params[ :controller ] == "charges" ? "class=current" : "" %>><%= link_to "Donate", donate_charity_path( @charity ) %></li>
+
+      <% if @pages.size > 1 %>
+        <% @pages.each do |page|
+          title = page.title
+
+          if page.title == "index"
+            title = "Home"
+          end
+        %>
+        <li><%= link_to title.capitalize.tr( "_", " " ), charity_page_path( @charity, page ) %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col col1 col-md-10">
+          <%= yield %>
+      </div>
+      <div class="col col2 col-md-2">
+
+      </div>    
+    </div>
+  </div>
+<% end %>
 <%= render template: "layouts/site" %>

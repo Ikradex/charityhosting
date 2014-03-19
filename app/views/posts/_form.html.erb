@@ -1,0 +1,25 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag "csmeditor" %>
+<%= javascript_include_tag "csmeditor" %>
+<% end %>
+
+<%= form_for ([ @charity, @post ]) do |f| %>
+  <%= f.label :title, "Title of the post" %>
+  <%= f.text_field :title, class: "form-control", placeholder: "Title" %>
+  <%= f.label :summary, "Optional short summary of the blog post (160 characters)" %>
+  <%= f.text_field :summary, class: "form-control", placeholder: "Summary" %><br />
+
+  <%= f.text_area :post_content, class: "form-control editor", placeholder: "Write your content here!", id: "editor", style: "min-height: 300px" %><br />
+  
+  <%= f.submit "Save", class: "btn btn-primary btn-wide" %>
+<% end %>
+
+<script type="text/javascript">
+	var ready = function( ) {
+    	$( ".editor" ).CSMEditor( );
+  	}
+
+  	// this is a turbolinks fix as the ready event is not called on ajax requests
+  	$( document ).ready( ready );
+  	$( document ).on( 'page:load', ready );
+</script>

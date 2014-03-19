@@ -1,0 +1,47 @@
+<div class="page-header">
+  <ol id="admin-panel" class="breadcrumb">
+    <li><%= link_to "Admin", admin_index_path %></li>
+    <li class="active">Charities</li>
+  </ol>
+  <h2>Charities <small>Logged in as: <%= @admin.f_name + " " + @admin.l_name %></small></h2>
+</div>
+
+  <% if @charities.size > 0 %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="list-group">
+          <% @charities.first( @page_break_num / 2 ).each do |charity| %>
+            <a href="<%= admin_charity_path( charity ) %>" class="list-group-item">
+              <strong><%= charity.org_name %></strong>
+            </a>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <% num_charities_left = @charities.size - @page_break_num / 2 %>
+    <% if num_charities_left > 0 %>
+
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="list-group">
+          <% @charities.last( num_charities_left ).each do |charity| %>
+            <a href="<%= admin_charity_path( charity ) %>" class="list-group-item">
+              <strong><%= charity.org_name %></strong>
+            </a>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <% end %>
+  </div>
+
+  <% else %>
+
+  <p class="text-info text-center"><strong>No validated charities yet.</strong></p>
+
+  <% end %>
+</div>

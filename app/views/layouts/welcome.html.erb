@@ -2,16 +2,16 @@
 <%= stylesheet_link_tag "welcome", media: "all", "data-turbolinks-track" => true %>
 <% end %>
 
-<% content_for :content do %>
+<% content_for :app_content do %>
 <header>
   <nav class="navbar navbar-default navbar-lg" role="navigation">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
           <span class="sr-only">Toggle navigation</span>
       </button>
       <a class="navbar-brand" href="/">CSM</a>
     </div>
-    <div class="collapse navbar-collapse" id="navbar-collapse-01">
+    <div class="collapse navbar-collapse" id="navbar-collapse">
       <ul class="nav navbar-nav">           
         <li><%= link_to  "Charities", charities_path %></li>
         <li><a href="#fakelink">About</a></li>

@@ -1,1 +1,5 @@
-<%= render template: "layouts/charities" %>
+<% content_for :head do %>
+<%= stylesheet_link_tag "site", media: "all", "data-turbolinks_track" => true %>
+<%= javascript_include_tag "cp" %>
+<% end %>
+<%= render template: "layouts/site" %>

@@ -33,6 +33,6 @@ class User < ActiveRecord::Base
   end
 
   def self.get_admin
-    where( is_admin: 1 ).take
+    where( is_admin: 't' ).take
   end
 end

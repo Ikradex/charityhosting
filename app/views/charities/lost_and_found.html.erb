@@ -1,0 +1,18 @@
+<div class="page-header">
+	<h3>Lost &amp; Found</h3>
+</div>
+
+<p>If you've lost an animal and need help broadcasting to a wider area, here is the perfect medium for you. Just fill in the form below with a description of your animal. Provided a photo of your animal is very helpful.</p>
+
+<%= form_for :lost_case do |f| %>
+	<%= f.label :owner_email, "Email to contact you by" %>
+	<%= f.text_field :owner_email, type: "email", class: "form-control", placeholder: "Email", required: true %>
+
+	<%= f.label :animal_name, "Name of your animal" %>
+	<%= f.text_field :animal_name, class: "form-control", placeholder: "Animal name", required: true %>
+
+	<%= f.label :description, "Describe your lost animal" %>
+	<%= f.text_area :description, class: "form-control", size: "40x10", placeholder: "Description", required: true %><br />
+
+	<%= f.submit "Submit", class: "btn btn-wide btn-primary" %>
+<% end %>
