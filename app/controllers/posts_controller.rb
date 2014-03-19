@@ -4,7 +4,7 @@ class PostsController < ApplicationController
     @pages = @charity.pages
 
     @page_break_num = 9
-    @posts = Post.all.paginate( page: params[ :page ], per_page: @page_break_num )
+    @posts = @charity.posts.paginate( page: params[ :page ], per_page: @page_break_num )
   end
 
   def show

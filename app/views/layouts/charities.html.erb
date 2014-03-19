@@ -10,7 +10,9 @@
 
   <div id="site-masthead">
     <h1 class="masthead-header"><%= link_to @charity.org_name, charity_path( @charity ) %></h1>
-    <img class="site-logo avatar" src="http://placehold.it/150x150" alt="Site logo" />
+    <% if @image.present? %>
+      <img class="site-logo avatar" src="http://placehold.it/150x150" alt="Site logo" />
+    <% end %>
   </div>
 
   <nav id="site-nav" class="navbar" role="navigation">
@@ -29,7 +31,7 @@
             title = "Home"
           end
         %>
-        <li><%= link_to title.capitalize.tr( "_", " " ), charity_page_path( @charity, page ) %></li>
+        <li <%= params[ :id ] == title ? "class=current" : "" %>><%= link_to title.capitalize.tr( "_", " " ), charity_page_path( @charity, page ) %></li>
         <% end %>
       <% end %>
     </ul>

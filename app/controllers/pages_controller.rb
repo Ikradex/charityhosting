@@ -48,6 +48,7 @@ class PagesController < ApplicationController
 
   def edit
     @charity = Charity.find_by_domain( params[ :charity_id ] )
+    @pages = @charity.pages
 
     if session[ :auth ] and session[ :user_id ] == @charity.user_id
       # get the charity's page to edit

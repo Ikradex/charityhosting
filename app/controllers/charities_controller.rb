@@ -49,7 +49,12 @@ class CharitiesController < ApplicationController
 
   def search
     @charities = Charity.search( params[ :charity ][ :org_name ] )
-    render 'index'
+
+    if @charities.any?
+      render 'index'
+    else
+      redirect_to :back
+    end
   end
 
   def verify

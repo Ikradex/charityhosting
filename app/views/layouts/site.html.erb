@@ -42,9 +42,8 @@
               <% if session[ :user_id ] == User.get_admin.id %>
               <li><%= link_to "Admin", admin_index_path %></li>
               <% end %>
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
+              <li><%= link_to "Account", "#" %></li>
+              <li><%= link_to "Your charities", "#" %></li>
               <li class="divider"></li>
               <li><%= link_to "Logout", logout_path %></li>
             </ul>

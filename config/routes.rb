@@ -33,7 +33,7 @@ CharitySystemManager::Application.routes.draw do
 
   #charities
   get "/charities/verify"
-  get "/charities/search"
+  get "/charities/search" => "charities#search"
   get "/charities/domain_check"
 
   get "/charities/:charity_id/"      => "charities#show"
@@ -53,7 +53,7 @@ CharitySystemManager::Application.routes.draw do
   resources :charities do
     resources :animals
     resources :posts
-    resources :pages, :path => 'p' #removes the "pages" part of the url
+    resources :pages, :path => 'p' #shorten the controller name 'pages' to 'p' => readability!
     resources :charges
   end
 

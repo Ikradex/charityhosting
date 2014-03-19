@@ -7,8 +7,9 @@
 </div>
 
 <p>Every cent helps this charity better its cause but needs people like you for support. So please, donate what you can to help better this charity and its cause.</p>
+<div class="alert alert-info"><strong>All transactions securely mediated by <%= link_to "Stripe.", "https://stripe.com/ie" %></strong></div>
 
-<%= form_for charity_charges_path( @charity ) do |f| %>
+<%= form_for charity_charges_path( @charity ), html: { id: "donate_form" } do |f| %>
 	<div class="well">
 	  <div id="slider" class="ui-slider">
 	  	<span class="text-primary ui-slider-value first">&euro;2.00</span>
@@ -16,10 +17,12 @@
 	  </div>
 	</div>
 
+	<%= f.hidden_field :org_name, value: @charity.org_name, id: "charity_name" %>
+
 	<%= f.label :amount, "Or enter a custom amount here" %>
-	<%= f.text_field :amount, class: "form-control", placeholder: "Enter custom amount" %><br />
+	<%= f.text_field :amount, class: "form-control", placeholder: "Enter custom amount", id: "custom_amount_field" %><br />
 
-	<button type="button" id="charge_submit_btn" class="btn btn-hg btn-embossed btn-primary">Donate</button>
-
-  <script src="https://checkout.stripe.com/checkout.js"></script>
+	<%= f.submit "Donate", class: "btn btn-wide btn-lg btn-embossed btn-primary" %>
 <% end %>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
