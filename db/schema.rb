@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140319135210) do
+ActiveRecord::Schema.define(version: 20140319202404) do
 
   create_table "accounts", force: true do |t|
     t.float    "income"
@@ -71,6 +71,9 @@ ActiveRecord::Schema.define(version: 20140319135210) do
   create_table "donations", force: true do |t|
     t.float    "amount"
     t.datetime "timestamp"
+    t.string   "token"
+    t.string   "email"
+    t.integer  "charity_id"
   end
 
   create_table "guests", force: true do |t|

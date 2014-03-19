@@ -40,7 +40,8 @@ CharitySystemManager::Application.routes.draw do
   get "/charities/:charity_id/index" => "charities#show"
 
   #donations
-  get "/charities/:charity_id/donate" => "charges#new", as: "donate_charity"
+  get  "/charities/:charity_id/donate" => "charges#new", as: "donate_charity"
+  post "/charities/:charity_id/donate" => "charges#create"
 
   #lost and found
   get "/charities/:charity_id/lost_and_found" => "charities#lost_and_found", as: "charity_lost_and_found"

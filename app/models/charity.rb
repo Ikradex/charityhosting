@@ -1,9 +1,10 @@
 class Charity < ActiveRecord::Base
   belongs_to :user
-  has_one :account
   has_many :pages
   has_many :animals
   has_many :posts
+  has_many :donations
+  has_one :account
 
   before_save { self.domain = domain.downcase }
 

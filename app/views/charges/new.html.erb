@@ -6,23 +6,36 @@
 	<h3>Help them out, donate!</h3>
 </div>
 
-<p>Every cent helps this charity better its cause but needs people like you for support. So please, donate what you can to help better this charity and its cause.</p>
+<p>Every cent helps this charity and its cause but needs people like you for support. So please, donate what you can to help better this charity.</p>
 <div class="alert alert-info"><strong>All transactions securely mediated by <%= link_to "Stripe.", "https://stripe.com/ie" %></strong></div>
 
-<%= form_for charity_charges_path( @charity ), html: { id: "donate_form" } do |f| %>
+<% if flash[ :success ].present? %>
 	<div class="well">
-	  <div id="slider" class="ui-slider">
-	  	<span class="text-primary ui-slider-value first">&euro;2.00</span>
-	  	<span class="ui-slider-value last">&euro;50.00</span>
-	  </div>
+		<h3 class="text-primary">Thank you!</h3>
+		<span class="text-info">Transaction successful.</span>
+
+		<p>Your donations keep these charities alive to further their cause and we thank you for your gift.</p>
 	</div>
 
-	<%= f.hidden_field :org_name, value: @charity.org_name, id: "charity_name" %>
+<% else %>
 
-	<%= f.label :amount, "Or enter a custom amount here" %>
-	<%= f.text_field :amount, class: "form-control", placeholder: "Enter custom amount", id: "custom_amount_field" %><br />
+	<%= form_for charity_charges_path( @charity ), html: { id: "donate_form" } do |f| %>
+		<div class="well">
+		  <div id="slider" class="ui-slider">
+		  	<span class="text-primary ui-slider-value first">&euro;2.00</span>
+		  	<span class="ui-slider-value last">&euro;50.00</span>
+		  </div>
+		</div>
 
-	<%= f.submit "Donate", class: "btn btn-wide btn-lg btn-embossed btn-primary" %>
+		<%= f.hidden_field :org_name, value: @charity.org_name, id: "charity_name" %>
+
+		<%= f.label :amount, "Or enter a custom amount here" %>
+		<%= f.text_field :amount, class: "form-control", placeholder: "Enter custom amount", id: "custom_amount_field" %><br />
+
+		<%= f.submit "Donate", id: "donate_form_submit_button", class: "btn btn-wide btn-lg btn-embossed btn-primary" %>
+
+	<% end %>
+
 <% end %>
 
 <script src="https://checkout.stripe.com/checkout.js"></script>

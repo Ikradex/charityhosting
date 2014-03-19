@@ -10,6 +10,7 @@ class CharitiesController < ApplicationController
     @posts = @charity.posts.limit( 3 )
     @animals = @charity.animals.last( 3 )
     @user = @charity.user
+    #@logo_image = @charity.image
   end
 
   def new

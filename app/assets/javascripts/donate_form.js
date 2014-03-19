@@ -22,18 +22,20 @@ var ready = function( ) {
 		      // Use the token to create the charge with a server-side script.
 		      // You can access the token ID with `token.id`
 
-		      console.log( args )
+		      var tokenInput = $( "<input type=hidden name=stripeToken />" ).val( token.id );
+			  var emailInput = $( "<input type=hidden name=stripeEmail />" ).val( token.email );
+			  var amountInput = $( "<input type=hidden name=stripeAmount />" ).val( donateAmount );
 
-		      $( "#donate_form" ).replaceWith( $( "<div class=\"well\"><h3 class=\"text-primary\">Thank you!</h3><span class=\"text-info\">Transaction successful.</span><p>Your donations keep these charities alive to further their cause and we thank you for your gift.</p></div>" ));
+			  $( "#donate_form" ).append( tokenInput ).append( emailInput ).append( amountInput ).submit( );
 			}
 		});
 
-	$( "#donate_form" ).submit( function( e ) {
+	$( "#donate_form_submit_button" ).click( function( e ) {
 		handler.open({
 	      name: "Charity Hosting",
-	      description: "Donate €" + ( donateAmount / 100 ) + ".00 to " + $( "#charity_name" ).val( ),
+	      description: "Donate to " + $( "#charity_name" ).val( ),
 	      currency: "EUR",
-	      amount: ( $( "#custom_amount_field" ).val( ) != "" ) ? $( "#custom_amount_field" ).val( ) / 100 :  donateAmount
+	      amount: ( $( "#custom_amount_field" ).val( ) != "" ) ? $( "#custom_amount_field" ).val( ) * 100 : donateAmount
 	    });
 
 	    e.preventDefault( );

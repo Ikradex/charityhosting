@@ -6,22 +6,33 @@ class ChargesController < ApplicationController
 
   def create
     # Amount in cents
-    @amount = params[ :amount ]
+    @charity = Charity.find_by_domain( params[ :charity_id ] )
+    @amount = params[ :stripeAmount ]
 
-    customer = Stripe::Customer.create(
-      :email => 'example@stripe.com',
-      :card  => params[ :stripeToken ]
-    )
+    @donation = @charity.donations.create( amount: ( params[ :stripeAmount ].to_f / 100 ), token: params[ :stripeToken ], email: params[ :stripeEmail ] )
 
-    charge = Stripe::Charge.create(
-      :customer    => customer.id,
-      :amount      => @amount,
-      :description => "Donation",
-      :currency    => 'EUR'
-    )
+    if @donation.save!
+      customer = Stripe::Customer.create(
+        :email => params[ :stripeEmail ],
+        :card  => params[ :stripeToken ]
+      )
+
+      charge = Stripe::Charge.create(
+        :customer    => customer.id,
+        :amount      => @amount,
+        :description => "Charity hosting donation",
+        :currency    => 'EUR'
+      )
+
+      flash[ :success ] = true
+      flash[ :overhead ] = "Transaction successful."
+    else
+      flash[ :overhead ] = "Transaction failed."
+    end
+
+    redirect_to :back
 
   rescue Stripe::CardError => error
-    flash[ :overhead ] = error.message
-    redirect_to charges_path
+    redirect_to :back, flash: { overhead: error }
   end
 end
