@@ -1,3 +1,7 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag "charities", media: "all", "data-turbolinks_track" => true %>
+<% end %>
+
 <div class="row">
   <div class="col col1 col-md-9">
     <% @charities.each do |charity| %>
@@ -5,7 +9,7 @@
     <div class="charity-summary">
       <div class="row">
         <div class="col1 col-md-3">
-          <img class="site-logo" src="http://placehold.it/150x150" alt="Site logo" />
+          <img class="site-logo avatar" src="http://placehold.it/150x150" alt="Site logo" />
         </div>
         <div class="col2 col-md-8">
           <h4><%= charity.org_name %></h4>

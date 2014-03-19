@@ -15,10 +15,10 @@
 
   <nav id="site-nav" class="navbar" role="navigation">
     <ul class="nav navbar-nav">
-      <li <%= params[ :controller ] == "charities" ? "class=current" : "" %>><%= link_to "Home", charity_path( @charity ) %></li>
+      <li <%= params[ :controller ] == "charities" and params[ :action ] == "show" ? "class=current" : "" %>><%= link_to "Home", charity_path( @charity ) %></li>
       <li <%= params[ :controller ] == "animals" ? "class=current" : "" %>><%= link_to "Animals", charity_animals_path %></li>
       <li <%= params[ :controller ] == "posts" ? "class=current" : "" %>><%= link_to "Blog", charity_posts_path %></li>
-      <li <%= params[ :controller ] == "charges" ? "class=current" : "" %>><%= link_to "Lost & Found", charity_lost_and_found_path( @charity ) %></li>
+      <li <%= params[ :controller ] == "charities" and params[ :action ] == "lost_and_found" ? "class=current" : "" %>><%= link_to "Lost & Found", charity_lost_and_found_path( @charity ) %></li>
       <li <%= params[ :controller ] == "charges" ? "class=current" : "" %>><%= link_to "Donate", donate_charity_path( @charity ) %></li>
 
       <% if @pages.size > 1 %>
