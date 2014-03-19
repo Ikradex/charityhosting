@@ -6,23 +6,36 @@ class AdminController < ApplicationController
       @requests_pending = Request.where( approved: false ).limit( 5 )
       @charities_validated = Charity.last( 5 )
     else
-      redirect_to login_path
+      redirect_to login_path( :return => reques.url )
     end
   end
 
-  def validate_charity
-    if request.post?
-      @request = Request.where( approval_token: params[ :user ][ :approval_token ] ).take
-      @form_errors = Array.new
+  def charities_index
+    @admin = User.get_admin
+    @page_break_num = 30
+    @charities = Charity.all.paginate( page: params[ :page ], per_page: @page_break_num )
+  end
 
-      if !@request.blank? and @request.approved?
+  def charity_show
+    @admin = User.get_admin
+    @charity = Charity.find_by_domain( params[ :charity_id ] )
+  end
+
+  def charity_edit
+
+  end
+
+  def validate_charity
+    @form_errors = Array.new
+
+    if request.post?
+      @request = Request.find_by_approval_token( params[ :user ][ :approval_token ] )
+
+      if @request.present? and @request.approved?
         # convert our request to charity parameters for filtering
         params[ :charity ] = @request.attributes
 
-        # the index page of the site
-        init_pages = [ "index", "animals", "lost_and_found", "donate" ]
         user_id = 0;
-
         # create new user if not logged in
         if params[ :user ] and !session[ :auth ]
           @user = User.create( get_user_params )
@@ -32,7 +45,7 @@ class AdminController < ApplicationController
             session[ :user_id ] = user_id
             session[ :auth ] = true
           else
-            @form_errors |= @user.errors.full_messages
+            ( @form_errors << @user.errors.full_messages ).flatten!
           end
         else
           user_id = session[ :user_id ]
@@ -41,40 +54,26 @@ class AdminController < ApplicationController
         @charity = Charity.create( get_charity_params )
         @charity.user_id = user_id
 
-        if @charity.valid? and @charity.save!
-          # init pages
-          init_pages.each do |init_page|
-            page = @charity.pages.create( title: init_page  )
+        if @charity.valid?
+          @charity.save!
 
-            if page.valid? and page.save!
-              # get the content of all init partials
-              init_page_content = render_to_string( "pages/_" + init_page + "_page_content", layout: false )
-              content = page.create_content( content_src: init_page_content )
-
-              if content.valid? and content.save!
-                @form_errors |= content.errors.full_messages
-              end
-            else
-              @form_errors |= page.errors.full_messages
-            end
-          end
-
-          if @form_errors.size > 0
+          if @form_errors.size <= 0
             # this prevents users from creating duplicate charities through the validation page
-            @request.approval_token = "";
+            @request.update_attributes( approval_token: nil )
 
             redirect_to @charity, flash: { overhead: "Congratulations! Charity validation successful." }
           else
             render 'validate_charity', flash: { overhead: "Charity validation unsuccessful" }
           end
         else
+          ( @form_errors << @charity.errors.full_messages ).flatten!
           render 'validate_charity'
         end
       else
-        redirect_to :back, flash: { overhead: "Request not approved yet or does not exist" }
+        redirect_to charities_path, flash: { overhead: "Request not approved yet or does not exist" }
       end
     else
-      @request = Request.where( approval_token: params[ :token ] ).take
+      @request = Request.find_by_approval_token( params[ :token ] )
       @user = ( session[ :auth ] ) ? User.find( session[ :user_id ] ) : User.new
 
       # request token expires after one week
@@ -90,8 +89,8 @@ class AdminController < ApplicationController
     #@charity.update_attributes( suspended: true )
   end
 
-  def destroy_charity
-    @charity = Charity.find( params[ :charity_id ] )
+  def charity_destroy
+    @charity = Charity.find( params[ :charity_id ] ).take
 
     if @charity.destroy
       redirect_to :back

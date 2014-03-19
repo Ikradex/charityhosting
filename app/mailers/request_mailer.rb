@@ -4,7 +4,7 @@ class RequestMailer < ActionMailer::Base
   def request_email( request ) 
     @request = request
 
-    mail( to: User.get_admin.email, subject: "Request: " + @request.org_name )
+    mail( to: User.get_admin.email, subject: "Request: \"" + @request.org_name + "\"" )
   end
 
   def confirm_request_email( request )
@@ -17,13 +17,13 @@ class RequestMailer < ActionMailer::Base
     @request = request
     @info = info
 
-    mail( to: request.email, subject: "Request: " + @request.org_name + " approved!" )
+    mail( to: request.email, subject: "Request: \"" + @request.org_name + "\" approved!" )
   end
 
   def reject_request( request, reason )
     @request = request
     @reason = reason
 
-    mail( to: request.email, subject: "Request: " + @request.org_name + " rejected." )
+    mail( to: request.email, subject: "Request: \"" + @request.org_name + "\" rejected." )
   end
 end

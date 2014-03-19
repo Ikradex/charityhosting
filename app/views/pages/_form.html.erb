@@ -25,16 +25,16 @@
   </div>
   <% end %>
   <fieldset>
-    <% if params[ :action ] == "edit" and @page.title == 'index' %>
-      <%= f.text_field :title, class: "form-control", placeholder: "Unique name of the page", disabled: "disabled" %>
+    <% if params[ :action ] == "edit" and @page.editable? %>
+      <%= f.text_field :title, class: "form-control", placeholder: "Unique name of the page", disabled: "disabled" %><br />
       <p>You cannot edit the home page's name.</p>
     <% else %>
-      <%= f.text_field :title, class: "form-control", placeholder: "Unique name of the page" %>
+      <%= f.text_field :title, class: "form-control", placeholder: "Unique name of the page" %><br />
     <% end %>
   </fieldset>
   <fieldset>
     <%= fields_for @content do |content_fields| %>
-    <%= content_fields.text_area :content_src, class: "form-control editor", placeholder: "Write your content here!", style: "min-height: 300px" %>
+    <%= content_fields.text_area :content_src, class: "form-control editor", placeholder: "Write your content here!", size: "40x10" %><br />
      <% end %>
   </fieldset>
   

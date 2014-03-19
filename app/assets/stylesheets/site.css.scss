@@ -101,7 +101,7 @@ div.charity-summary {
 	}
 }
 
-.site-logo {
+img.avatar {
 	border-radius: 1px solid #333;
 	border-radius: 50%;
 	background-color: #FFF;
@@ -172,6 +172,17 @@ div.blog-post {
 	left: 0px;
 	border-radius: 0px;
 }
+
+.page-header {
+	margin-top: 0.5em;
+}
+
+.thumbnail-col {
+	p.desc {
+		height: 140px;
+	}
+}
+
 
 //======== STRUCTURE ========//
 

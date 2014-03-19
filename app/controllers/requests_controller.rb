@@ -88,7 +88,7 @@ class RequestsController < ApplicationController
       @request.update_attributes( approved: true, approval_token: token )
 
       RequestMailer.approve_request( @request, @info ).deliver
-      flash[ :overhead ] = "Request" + @request.id.to_s + " approved."
+      flash[ :overhead ] = "Request #" + @request.id.to_s + " approved."
     else
       flash[ :overhead ] = "You are not authorized to approve requests."
     end

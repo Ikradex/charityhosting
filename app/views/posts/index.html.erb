@@ -1,2 +1,21 @@
-<h1>Posts#index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
+<div class="page-header">
+	<h3>Blog Posts</h3>
+
+	<small>Here you'll find blog posts and stories by the charity admin.</small>
+</div>
+
+<div id="blog-posts">
+	<% @posts.each_slice( 3 ) do |post_slice| %>
+    <div class="row">
+      <% post_slice.each do |post| %>
+      	<div class="col-md-4">
+      		<h5><%= post.title %></h5>
+
+      		<p class="summary"><small><%= post.summary %></small></p>
+
+      		<%= link_to "Read", charity_post_path( @charity, post ), class: "btn btn-primary btn-block" %>
+      	</div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

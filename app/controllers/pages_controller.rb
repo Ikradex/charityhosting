@@ -3,10 +3,10 @@ class PagesController < ApplicationController
     # sometimes the page's id can be either as id or page_id in the request parameters
     # if neither are present (eg. http://charityhosting.ie/charities/catactiontrust ) 
     # then the page request must be the index
-    
+
     id = params[ :id ] ? params[ :id ] : params[ :page_id ] ? params[ :page_id ] : "index"
-    @charity = Charity.where( domain: params[ :charity_id ] ).take
-    @page = @charity.pages.where( title: id ).take
+    @charity = Charity.find_by_domain( params[ :charity_id ] )
+    @page = @charity.pages.find_by_title( id )
     # we can get all pages based on the charity id - rails makes it so we can access it like an attribute
     @pages = @charity.pages
     # same applies for content - notice one-to-one (has_one) associations are not pluralised
@@ -15,7 +15,8 @@ class PagesController < ApplicationController
 
   def new
     # we always fetch a charity based on the domain in the url
-    @charity = Charity.where( domain: params[ :charity_id ] ).take
+    @charity = Charity.find_by_domain( params[ :charity_id ] )
+    @pages = @charity.pages
 
     # make sure this admin is auth and is his own charity
     if session[ :auth ] and session[ :user_id ] == @charity.user_id
@@ -27,8 +28,9 @@ class PagesController < ApplicationController
   end
 
   def create
+    @charity = Charity.find_by_domain( params[ :charity_id ] )
+    
     if session[ :auth ] and session[ :user_id ] == @charity.user_id
-      @charity = Charity.where( domain: params[ :charity_id ] ).take
       @page = @charity.pages.create( get_page_params )
       @content = @page.create_content( get_content_params )
 
@@ -45,11 +47,11 @@ class PagesController < ApplicationController
   end
 
   def edit
-    @charity = Charity.where( domain: params[ :charity_id ] ).take
+    @charity = Charity.find_by_domain( params[ :charity_id ] )
 
     if session[ :auth ] and session[ :user_id ] == @charity.user_id
       # get the charity's page to edit
-      @page = @charity.pages.where( title: params[ :id ] ).take
+      @page = @charity.pages.find_by_title( params[ :id ] )
       # get the page's content to edit
       @content = @page.content
     else
@@ -58,11 +60,11 @@ class PagesController < ApplicationController
   end
 
   def update
-    @charity = Charity.where( domain: params[ :charity_id ] ).take
+    @charity = Charity.find_by_domain( params[ :charity_id ] )
 
     if session[ :auth ] and session[ :user_id ] == @charity.user_id
       # we need to get the charity's page we're trying to update
-      @page = @charity.pages.where( title: params[ :id ] ).take
+      @page = @charity.pages.find_by_title( params[ :id ] )
       # get the page's content to update
       @content = @page.content
 
@@ -77,10 +79,10 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    charity = Charity.where( domain: params[ :charity_id ] ).take
+    charity = Charity.where( domain: params[ :charity_id ] )
 
     if session[ :auth ] and session[ :user_id ] == @charity.user_id
-      page = Page.where( title: params[ :id ] ).take
+      page = Page.find_by_title( params[ :id ] )
 
       # will change this to some destroy_enabled attribute
       if page.title != "index"

@@ -11,6 +11,10 @@
   <% end %>
 </div>
 
+<% if @request.approval_token.present? %>
+<p>Token: <code><%= @request.approval_token %></code></p>
+<% end %>
+
 <table class="table table-striped table-bordered">
   <tbody>
     <tr><th style="width: 100px">Created:</th><td><%= @request.created_at.to_formatted_s( :long ) %></td></tr>
@@ -92,5 +96,3 @@
   </div>
   
 <% end %>
-
-<%= javascript_include_tag "cp" %>

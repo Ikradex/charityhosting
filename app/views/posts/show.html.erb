@@ -1,2 +1,19 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<article>
+  <div class="page-header">
+    <%= link_to "All posts", charity_posts_path( @charity ), class: "btn btn-primary" %>
+    <h3><%= @post.title %></h3>
+
+    <small class="text-primary">By <%= @user.f_name + " " + @user.l_name %> &bull; <%= @post.created_at.to_formatted_s( :short ) %></small>
+    <% if ( @post.updated_at - @post.created_at ) > 1.second %>
+      <br /><small class="text-info">Updated: <%= @post.updated_at.to_formatted_s( :short ) %></small>
+    <% end %>
+  </div>
+
+  <div id="blog-post">
+    <p class="post-summary"><%= @post.summary %></p>
+
+    <div class="content">
+    <%= raw @post.post_content %>
+    </div>
+  </div>
+</article>

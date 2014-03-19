@@ -1,0 +1,18 @@
+<div class="page-header">
+  <h1 class="text-primary">Adopt <%= @animal.name %> </h1>
+
+  <%= link_to "Return to gallery", charity_animals_path, class: "btn btn-info" %>
+</div>
+
+<div class="row">
+  <div class="center-block" style="width: 450px;">
+    <h4 class="text-center">You wish to adopt <%= @animal.name %></h4>
+    <img src="http://placehold.it/450x350" alt="<%= @animal.name %>" />
+
+    <p class="text-center"><strong>Click the button below to contact the owner or admin to enquire about adopting this animal.</strong></p>
+    <% email = ( @animal.owner_email.present? ) ? @animal.owner_email : @charity.user.email %>
+    <%= mail_to email, subject: "Charity Hosting: I wish to adopt " + @animal.name.to_s, class: "btn btn-primary btn-block" do %>
+      Contact owner
+    <% end %>
+  </div>
+</div>

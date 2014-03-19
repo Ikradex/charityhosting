@@ -5,3 +5,22 @@
 /*
  *= require site
  */
+
+.post-summary {
+	color: #AAA;
+	font-size: 1.2em;
+	font-style: italic;
+	border-bottom: 1px dashed #EEE;
+	display: inline;
+}
+
+#blog-posts {
+	.blog-post {
+		padding-bottom: 1em;
+		border-bottom: 1px solid #EEE;
+	}
+
+	.summary {
+		height: 100px;
+	}
+}
