@@ -1,0 +1,77 @@
+/*=============================
+Chris Twomey
+Application-wide stylesheet for www.charityhosting.ie
+
+We're using SASS (SCSS) here
+
+swatch colours
+---------------
+
+Dark Slate Gray #34495E
+Light Sea Green #1ABC9C
+
+---------------
+sections
+---------------
+
+ - variables
+ - structure
+
+---------------
+12 March 2014
+=============================*/
+
+/*=============================
+    SWATCH
+=============================*/
+
+$background : image-url( "dark_mosaic.png" );
+$darkslategray : #314043;
+$slategray : #657e84;
+$highlight : #ff6652;
+
+$nav-bg : $darkslategray;
+
+html, body {
+	
+}
+
+a, h1, h2, h3, h4, h5, h6 {
+	color: $darkslategray;
+}
+
+#site-panel {
+	background: $nav-bg;
+
+	form input, form button {
+		background: $nav-bg;
+	}
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus{
+	background-color: $slategray !important;
+}
+
+#site-nav {
+	ul {
+		li {
+			//
+		}
+
+		li:hover {
+			a {
+				color: $slategray !important;
+			}
+			border-bottom: 2px solid $darkslategray !important;
+		}
+
+		li.current {
+			border-bottom: 2px solid $darkslategray !important;
+		}
+	}		
+}
+
+
+#inner-wrap {
+	background: rgba( 255, 255, 255, 0.95 );
+}

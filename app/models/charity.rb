@@ -4,6 +4,7 @@ class Charity < ActiveRecord::Base
   has_many :animals
   has_many :posts
   has_many :donations
+  has_many :lost_cases
   has_one :account
 
   before_save { self.domain = domain.downcase }
@@ -23,6 +24,11 @@ class Charity < ActiveRecord::Base
   validates :template, presence: true, 
     inclusion: { in: 1..3 },
     numericality: { only_integer: true }
+
+  #has_attached_file :banner_avatar, :styles => { :large => "2100x300", :medium => "1200x300>", :thumb => "400x100" }, :default_url => "/images/:style/missing.png"
+  #has_attached_file :avatar, :styles => { :large => "450x450", :medium => "300x300", :thumb => "150x150" }, :default_url => "/images/:style/missing.png"
+  #validates_attachment_content_type, :attributes => { :avatar, :banner_avatar }, :content_type => /\Aimage\/.*\Z/
+  #validates_with AttachmentPresenceValidator, :attributes => { :avatar, :banner_avatar } 
 
   # this allows us to save pages, account in the charity form
   # for nested resources

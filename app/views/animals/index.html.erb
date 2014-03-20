@@ -8,7 +8,7 @@
       <% animal_slice.each do |animal| %>
         <div class="thumbnail-col col-xs-12 col-sm-6 col-md-4">
           <div class="thumbnail">
-            <img src="http://placehold.it/300x275" alt="...">
+            <%= image_tag animal.avatar.url(:thumb) %>
             <div class="caption">
               <h4><%= animal.name %></h4>
               <small class="text-info">

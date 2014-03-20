@@ -16,6 +16,10 @@ class Animal < ActiveRecord::Base
   validates :breed, length: { maximum: 60 }
   validates :can_adopt, :can_sponsor, inclusion: { in: [ true, false ] }
 
+  has_attached_file :avatar, :styles => { :large => "900x600", :medium => "450x300>", :thumb => "300x275" }, :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  validates_with AttachmentPresenceValidator, :attributes => :avatar
+
   def to_param
     name.downcase
   end

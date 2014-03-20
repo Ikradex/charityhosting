@@ -1,0 +1,42 @@
+<div class="page-header">
+  <ol id="admin-panel" class="breadcrumb">
+    <li class="active"><%= link_to "Account", charity_account_path %></li>
+  </ol>
+  <h2>Account <small>Logged in as: <%= @user.f_name + " " + @user.l_name %></small></h2>
+</div>
+
+<%= form_for @charity, class: "form-horizontal", html: { role: "form" } do |f| %>
+  <div class="form-group">
+    <%= f.label :org_address, "Organisation address", class: "col-sm-3 col-md-3 control-label" %>
+    <div class="col-sm-6 col-md-8">
+      <%= f.text_field :org_address, minlength: 3, maxlength: 320, title: "The charity's address name must be between 3 and 320 characters", class: "form-control", placeholder: "Address of organisation" %><br />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email, "Email address", class: "col-sm-3 col-md-3 control-label" %>
+    <div class="col-sm-6 col-md-8">
+      <%= f.text_field :email, type: "email", required: true, minlength: 6, maxlength: 254, title: "Email must be between 6 and 254 characters long.", class: "form-control", placeholder: "Email of organisation" %><br />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :org_tel, "Telephone", class: "col-sm-3 col-md-3 control-label" %>
+    <div class="col-sm-6 col-md-8">
+      <%= f.text_field :org_tel, class: "form-control", placeholder: "Telephone of organisation" %><br />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :template, "Template", class: "col-sm-3 col-md-3 control-label" %>
+    <div class="col-sm-6 col-md-8">
+      <%= f.text_field :template, class: "form-control", placeholder: "Template" %><br />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-10 col-md-12">
+      <%= f.submit "Save", class: "btn btn-primary btn-wide" %>
+    </div>
+  </div>
+<% end %>

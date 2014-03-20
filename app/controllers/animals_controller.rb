@@ -92,7 +92,7 @@ class AnimalsController < ApplicationController
   end
 
   def get_animal_params
-    params.require( :animal ).permit( :name, :species, :breed, :can_adopt, :can_sponsor, :description )
+    params.require( :animal ).permit( :avatar, :name, :species, :breed, :can_adopt, :can_sponsor, :description, :owner_email )
   end
 
   def get_animal_name

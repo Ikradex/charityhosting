@@ -10,6 +10,7 @@ class CharitiesController < ApplicationController
     @posts = @charity.posts.limit( 3 )
     @animals = @charity.animals.last( 3 )
     @user = @charity.user
+    @lost_cases = @charity.lost_cases.last( 3 )
     #@logo_image = @charity.image
   end
 
@@ -19,7 +20,14 @@ class CharitiesController < ApplicationController
   end
 
   def edit
-    @charity = Charity.find_by_domain( params[ :id ] )
+    @charity = Charity.find_by_domain( params[ :charity_id ] )
+    @pages = @charity.pages
+
+    if session[ :auth ] and session[ :user_id ] == @charity.user_id
+      @user = User.find( session[ :user_id ] )
+    else
+      redirect_to charity_path( @charity ), flash: { overhead: "You do not have permission for that." }
+    end
   end
 
   def update
@@ -40,11 +48,18 @@ class CharitiesController < ApplicationController
   def lost_and_found
     @charity = Charity.find_by_domain( params[ :charity_id ] )
     @pages = @charity.pages
+    @lost_cases = LostCase.all
 
     if request.post?
+      @case = @charity.lost_cases.create( get_lost_found_params )
 
-    else
-      
+      if @case.valid? and @case.save!
+        flash[ :overhead ] = "Successfully created lost and found case."
+      else
+        flash[ :overhead ] = "Lost and found case creation failed."
+      end
+
+      redirect_to :back
     end
   end
 
@@ -125,5 +140,9 @@ class CharitiesController < ApplicationController
 
   def get_user_params
     params.require( :user ).permit( :f_name, :l_name, :email, :email_confirmation, :password, :password_confirmation )
+  end
+
+  def get_lost_found_params
+    params.require( :lost_case ).permit( :owner_email, :animal_name, :description )
   end
 end

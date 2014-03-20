@@ -1,6 +1,10 @@
 <% content_for :head do %>
 <%= stylesheet_link_tag params[ :controller ], media: "all", "data-turbolinks-track" => true %>
 <%= javascript_include_tag "cp" %>
+<% if @charity.template > 1 %>
+<% template = "template_" + @charity.template.to_s %>
+<%= stylesheet_link_tag template, media: "all", "data-turbolinks-track" => true %>
+<% end %>
 <% end %>
 
 <% content_for :site_content do %>
@@ -23,15 +27,11 @@
       <li <%= params[ :controller ] == "charities" and params[ :action ] == "lost_and_found" ? "class=current" : "" %>><%= link_to "Lost & Found", charity_lost_and_found_path( @charity ) %></li>
       <li <%= params[ :controller ] == "charges" ? "class=current" : "" %>><%= link_to "Donate", donate_charity_path( @charity ) %></li>
 
-      <% if @pages.size > 1 %>
-        <% @pages.each do |page|
-          title = page.title
-
-          if page.title == "index"
-            title = "Home"
-          end
-        %>
-        <li <%= params[ :id ] == title ? "class=current" : "" %>><%= link_to title.capitalize.tr( "_", " " ), charity_page_path( @charity, page ) %></li>
+      <% if @pages.any? %>
+        <% @pages.each do |page| %>
+          <% if page.title.present? %>
+          <li <%= params[ :id ] == page.title ? "class=current" : "" %>><%= link_to page.title.capitalize.tr( "_", " " ), charity_page_path( @charity, page ) %></li>
+          <% end %>
         <% end %>
       <% end %>
     </ul>

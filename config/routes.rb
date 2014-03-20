@@ -39,14 +39,20 @@ CharitySystemManager::Application.routes.draw do
   get "/charities/:charity_id/"      => "charities#show"
   get "/charities/:charity_id/index" => "charities#show"
 
+  #account
+  get  "/charities/:charity_id/account/" => "charities#edit", as: "charity_account"
+  post "/charities/:charity_id/account/" => "charities#update"
+
   #donations
   get  "/charities/:charity_id/donate" => "charges#new", as: "donate_charity"
   post "/charities/:charity_id/donate" => "charges#create"
 
   #lost and found
-  get "/charities/:charity_id/lost_and_found" => "charities#lost_and_found", as: "charity_lost_and_found"
+  get  "/charities/:charity_id/lost_and_found" => "charities#lost_and_found", as: "charity_lost_and_found"
+  post "/charities/:charity_id/lost_and_found" => "charities#lost_and_found"
 
-  #pages
+  get  "/charities/:charity_id/account/user" => "users#edit", as: "user_account"
+  post "/charities/:charity_id/account/user" => "users#update"
 
   #animals
   get "/charities/:charity_id/animals/:animal_id/adopt" => "animals#adopt", as: "adopt_charity_animal"

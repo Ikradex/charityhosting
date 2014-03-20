@@ -7,4 +7,4 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # !!! replace this information for whatever the admin's information is !!!
-User.create!({ f_name: "Chris", l_name: "Twomey", email: "ikradex@gmail.com", password: "<OMNIxlt150>", password_confirmation: "<OMNIxlt150>", is_admin: true })
+User.create!({ f_name: "Sys", l_name: "Admin", email: "sysadmin@charityhosting.ie", password: "admin_password", password_confirmation: "admin_password", is_admin: true })

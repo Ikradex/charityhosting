@@ -41,6 +41,8 @@ gem 'nokogiri'
 
 gem 'will_paginate', '~> 3.0'
 
+gem "paperclip", "~> 4.1"
+
 # we're using Stripe for our payment system
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 

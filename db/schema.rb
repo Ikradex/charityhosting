@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140319210527) do
+ActiveRecord::Schema.define(version: 20140320075605) do
 
   create_table "accounts", force: true do |t|
     t.float    "income"
@@ -31,6 +31,10 @@ ActiveRecord::Schema.define(version: 20140319210527) do
     t.string   "species"
     t.string   "breed"
     t.string   "owner_email"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "charities", force: true do |t|
@@ -48,6 +52,14 @@ ActiveRecord::Schema.define(version: 20140319210527) do
     t.datetime "updated_at"
     t.integer  "banner_image_id"
     t.integer  "logo_image_id"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string   "banner_avatar_file_name"
+    t.string   "banner_avatar_content_type"
+    t.integer  "banner_avatar_file_size"
+    t.datetime "banner_avatar_updated_at"
   end
 
   add_index "charities", ["account_id"], name: "index_charities_on_account_id"
@@ -92,6 +104,14 @@ ActiveRecord::Schema.define(version: 20140319210527) do
     t.string "mime_type"
   end
 
+  create_table "lost_cases", force: true do |t|
+    t.string  "owner_email"
+    t.string  "animal_name"
+    t.string  "description"
+    t.integer "image_id"
+    t.integer "charity_id"
+  end
+
   create_table "pages", force: true do |t|
     t.string  "title"
     t.integer "charity_id"
@@ -130,13 +150,6 @@ ActiveRecord::Schema.define(version: 20140319210527) do
     t.datetime "updated_at"
     t.boolean  "approved"
     t.string   "approval_token"
-  end
-
-  create_table "table_lost_cases", force: true do |t|
-    t.string  "owner_email"
-    t.string  "animal_name"
-    t.string  "description"
-    t.integer "image_id"
   end
 
   create_table "users", force: true do |t|

@@ -2,6 +2,29 @@
 	<h3>Lost &amp; Found</h3>
 </div>
 
+<% if @lost_cases.any? %>
+	<h4>Recent lost &amp; found cases</h4>
+	<div id="lost-cases">
+		<div class="row">
+			<% @lost_cases.each do |lost_case| %>
+				<div class="thumbnail-col col-xs-12 col-sm-6 col-md-4">
+	        <div class="thumbnail">
+	          <img src="http://placehold.it/300x275" alt="...">
+	          <div class="caption">
+	            <h4><%= lost_case.animal_name %></h4>
+
+	            <p class="desc"><small><%= lost_case.description %></small></p>
+	            <%= mail_to lost_case.owner_email, subject: "Charity Hosting: lost animal " + lost_case.animal_name.to_s, class: "btn btn-primary btn-block" do %>
+					      Contact owner
+					    <% end %>
+	          </div>
+	        </div>
+	      </div>
+			<% end %>
+		</div>
+	</div>
+<% end %>
+
 <p>If you've lost an animal and need help broadcasting to a wider area, here is the perfect medium for you. Just fill in the form below with a description of your animal. Provided a photo of your animal is very helpful.</p>
 
 <%= form_for :lost_case do |f| %>
@@ -16,3 +39,4 @@
 
 	<%= f.submit "Submit", class: "btn btn-wide btn-primary" %>
 <% end %>
+

@@ -15,7 +15,6 @@
 			"link",
 			"unordered-list",
 			"ordered-list",
-			"image",
 			"align-left",
 			"align-center",
 			"align-right"
