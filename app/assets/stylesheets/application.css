@@ -6,4 +6,5 @@
  *= require app
  *= require bootstrap/css/bootstrap
  *= require flat-ui
+ *= require bjqs
  */

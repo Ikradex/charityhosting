@@ -50,6 +50,10 @@ CharitySystemManager::Application.routes.draw do
   #animals
   get "/charities/:charity_id/animals/:animal_id/adopt" => "animals#adopt", as: "adopt_charity_animal"
 
+  #documentation
+  get "/documentation/about" => "documentation#about"
+  get "documentation/help" => "documentation#help"
+
   resources :charities do
     resources :animals
     resources :posts

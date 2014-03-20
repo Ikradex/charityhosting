@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140319135210) do
+ActiveRecord::Schema.define(version: 20140319201428) do
 
   create_table "accounts", force: true do |t|
     t.float    "income"
@@ -46,6 +46,10 @@ ActiveRecord::Schema.define(version: 20140319135210) do
     t.string   "org_tel"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "charities", ["account_id"], name: "index_charities_on_account_id"

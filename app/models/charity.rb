@@ -5,6 +5,8 @@ class Charity < ActiveRecord::Base
   has_many :animals
   has_many :posts
 
+  has_attached_file :image
+
   before_save { self.domain = domain.downcase }
 
   # validates - ensures attribute conforms to specified constraints

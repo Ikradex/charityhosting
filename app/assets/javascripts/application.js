@@ -10,3 +10,4 @@
 //= require flatui/jquery.placeholder
 //= require flatui/jquery.ui.touch-punch.min
 //= require flatui/jquery-ui-1.10.3.custom.min
+//= require bjqs-1.3.min.js

@@ -22,6 +22,8 @@ class CharitiesController < ApplicationController
   end
 
   def update
+    @charity = Charity.find_by_domain( params[ :id ] )
+    @charity.update_attributes(get_charity_params)
   end
 
   def destroy

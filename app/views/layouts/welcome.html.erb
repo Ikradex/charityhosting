@@ -14,8 +14,8 @@
     <div class="collapse navbar-collapse" id="navbar-collapse">
       <ul class="nav navbar-nav">           
         <li><%= link_to  "Charities", charities_path %></li>
-        <li><a href="#fakelink">About</a></li>
-        <li><a href="#fakelink">Help</a></li>
+        <li><%= link_to  "About", documentation_about_path %></li>
+        <li><%= link_to  "Help", documentation_help_path %></li>
       </ul>
       <%= link_to "Login", login_path, class: "btn btn-primary navbar-btn btn-sm" %>
       <%= link_to "Sign up", register_path, class: "btn btn-primary navbar-btn btn-sm" %>
