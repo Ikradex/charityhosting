@@ -79,6 +79,8 @@ div.charity-summary {
 	border-radius: 2px;
 	border-bottom: 1px solid $border-gray;
 	background: image-url( "main-bg.jpg" );
+	background-position: left top;
+	background-repeat: repeat;
 
 	.masthead-header {
 		a {

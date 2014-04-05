@@ -10,25 +10,30 @@ class AdminController < ApplicationController
     end
   end
 
+  # view all charities
+  # paginate by 30
   def charities_index
     @admin = User.get_admin
     @page_break_num = 30
     @charities = Charity.all.paginate( page: params[ :page ], per_page: @page_break_num )
   end
 
+  # show a particular charity
   def charity_show
     @admin = User.get_admin
     @charity = Charity.find_by_domain( params[ :charity_id ] )
   end
 
   def charity_edit
-
   end
 
+  # validates a charity to be generated
+  # validated charities must be created through approved requests
   def validate_charity
     @form_errors = Array.new
 
     if request.post?
+      # get the request based on secret token given through email
       @request = Request.find_by_approval_token( params[ :user ][ :approval_token ] )
 
       if @request.present? and @request.approved?
@@ -85,10 +90,13 @@ class AdminController < ApplicationController
 
   def invalidate_charity
     @charity = Charity.find( params[ :charity_id ] )
+    @charity.update_attributes( suspended: true )
 
-    #@charity.update_attributes( suspended: true )
+    redirect_to :back
   end
 
+  # should not be invoked unless you know what you're doing
+  # it is recommended you invalidate a charity rather than destroy it
   def charity_destroy
     @charity = Charity.find( params[ :charity_id ] ).take
 

@@ -52,7 +52,7 @@
       <% if @animal.avatar.blank? %>
 			<img id="preview-img" src="http://placehold.it/295x300" width="295" height="300" alt="Animal's photo" />
       <% else %>
-      <%= image_tag @animal.avatar.url(:thumb), width: 295, height: 300 %>
+      <%= image_tag @animal.avatar.url(:thumb), width: 295, height: 300, class: "img-thumbnail" %>
       <% end %>
 			<%= f.file_field :avatar, class: "btn btn-block btn-primary" %>
 		</div><br />

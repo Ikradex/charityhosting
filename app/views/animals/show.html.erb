@@ -8,15 +8,17 @@
     <% end %>
   </p>
 
+  <!-- back navigation -->
   <%= link_to "Return to gallery", charity_animals_path, class: "btn btn-info" %>
 </div>
 
 <div class="row">
   <div class="col-md-6">
-    <%= image_tag @animal.avatar.url( :large ), width: 450, height: 400 %>
+    <%= image_tag @animal.avatar.url( :large ), width: 450, height: 400, class: "img-thumbnail" %>
   </div>
   <div class="col-md-6">
     <div class="table-responsive">
+      <!-- animal info table -->
       <table class="table table-striped">
         <tbody>
           <tr><th>Name</th><td><%= @animal.name %></td></tr>
@@ -25,15 +27,17 @@
             <tr><th>Breed</th><td><%= @animal.breed %></td></tr>
           <% end %>
         </tbody>
-      </table>
+      </table><!-- / animal info table -->
     </div>
 
     <p id="animal-desc"><%= @animal.description %></p>
 
-    <p>Contact: <strong><%= @charity.user.email %></strong></p>
+    <% email = ( @animal.owner_email.present? ) ? @animal.owner_email : @charity.user.email %>
+    <p>Contact: <strong><%= email %></strong></p>
 
+    <!-- animal options -->
     <% if @animal.can_sponsor? %>
-      <%= link_to "Sponsor", "#", class: "btn btn-embossed btn-wide btn-info" %>
+      <%= link_to "Sponsor", donate_charity_path( @charity ), class: "btn btn-embossed btn-wide btn-info" %>
     <% end %>
 
     <% if @animal.can_adopt? %>

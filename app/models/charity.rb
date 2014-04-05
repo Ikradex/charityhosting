@@ -25,10 +25,13 @@ class Charity < ActiveRecord::Base
     inclusion: { in: 1..3 },
     numericality: { only_integer: true }
 
-  #has_attached_file :banner_avatar, :styles => { :large => "2100x300", :medium => "1200x300>", :thumb => "400x100" }, :default_url => "/images/:style/missing.png"
-  #has_attached_file :avatar, :styles => { :large => "450x450", :medium => "300x300", :thumb => "150x150" }, :default_url => "/images/:style/missing.png"
-  #validates_attachment_content_type, :attributes => { :avatar, :banner_avatar }, :content_type => /\Aimage\/.*\Z/
-  #validates_with AttachmentPresenceValidator, :attributes => { :avatar, :banner_avatar } 
+  # the charity model has images denoted by "avatar" and "banner_avtar"
+  # we generate various sizes for our images so we can call any one of them
+  has_attached_file :banner_avatar, :styles => { :large => "2100x300", :medium => "1200x300>", :thumb => "400x100" }, :default_url => "/images/:style/missing.png"
+  has_attached_file :avatar, :styles => { :large => "450x450", :medium => "300x300", :thumb => "150x150" }, :default_url => "/images/:style/missing.png"
+  # we're accepting any file as long as it's an image
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  validates_attachment_content_type :banner_avatar, :content_type => /\Aimage\/.*\Z/
 
   # this allows us to save pages, account in the charity form
   # for nested resources
@@ -38,6 +41,12 @@ class Charity < ActiveRecord::Base
   def self.search( query )
     if query
       find( :all, :conditions => [ "org_name LIKE ?", "%#{query}%" ])
+    end
+  end
+
+  def self.is_admin( user )
+    if user
+      user.id == self.user_id
     end
   end
 

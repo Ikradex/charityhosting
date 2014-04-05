@@ -16,6 +16,7 @@ class RequestsController < ApplicationController
     if is_admin
       @request = Request.find( params[ :request_id ] )
 
+      # check to see if there's a conflict with email addresses in the request
       flash[ :email ] = "No two charities can have the same email (" + @request.email + ")" unless Charity.find_by_email( @request.email ).nil?
     else
       redirect_to login_path( :return => request.url )
@@ -32,6 +33,7 @@ class RequestsController < ApplicationController
 
     if @request.valid? and @request.save!
 
+      # email admin and user of new request
       RequestMailer.request_email( @request ).deliver
       RequestMailer.confirm_request_email( @request ).deliver
 
@@ -80,10 +82,14 @@ class RequestsController < ApplicationController
     redirect_to :back
   end
 
+  #approves a request for a new charity be created
   def approve
     if is_admin
       @request = Request.find( params[ :approve ][ :request_id ] )
+      # get any additional information the admin provided
       @info = params[ :approve ][ :info ]
+
+      # generate a secure token for this request that only the user and admin will know
       token = SecureRandom.hex( 24 )
       @request.update_attributes( approved: true, approval_token: token )
 
@@ -96,9 +102,17 @@ class RequestsController < ApplicationController
     redirect_to admin_requests_path
   end
 
+  # rejects requests
   def reject
     if is_admin
       @request = Request.find( params[ :reject ][ :request_id ] )
+      # get reason for rejection
+      @reason = params[ :reject ][ :reason ]
+
+      @request.update_attributes( approved: false )
+
+      #RequestMailer.reject_request( @request, @reason ).deliver
+      flash[ :overhead ] = "Request #" + @request.id.to_s + " rejected."
     else
       flash[ :overhead ] = "You are not authorized to reject requests."
     end

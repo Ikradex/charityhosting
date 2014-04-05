@@ -1,0 +1,17 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag "bjqs", media: "all", "data-turbolinks_track" => true %>
+<%= javascript_include_tag "bjqs-1.3.min" %>
+<%= stylesheet_link_tag "documentation" %>
+<%= javascript_include_tag "documentation" %>
+<% end %>
+<div id="site-wrap">
+ 
+  <h1 id="help-heading">Help</h1>
+  <p id="instr">Click on the 'prev'/'next' buttons to cycle slides. Alternatively, use the arrow keys</p>
+  <div id="my-slideshow">
+    <ul class="bjqs">
+      <li><%= image_tag "sh1.png" %></li>
+      <li><%= image_tag "sh2.png" %></li>
+    </ul>
+  </div>
+</div>

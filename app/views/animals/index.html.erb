@@ -2,39 +2,44 @@
   <h3>Our animal gallery</h3>
 </div>
 
-<div id="gallery">
-  <% @animals.each_slice( 3 ) do |animal_slice| %>
-    <div class="row">
-      <% animal_slice.each do |animal| %>
-        <div class="thumbnail-col col-xs-12 col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <%= image_tag animal.avatar.url(:thumb) %>
-            <div class="caption">
-              <h4><%= animal.name %></h4>
-              <small class="text-info">
-                <%= animal.species %>
+<% if @animals.any? %>
+  <!-- animal gallery -->
+  <div id="gallery">
+    <% @animals.each_slice( 3 ) do |animal_slice| %>
+      <div class="row">
+        <% animal_slice.each do |animal| %>
+          <div class="thumbnail-col col-xs-12 col-sm-6 col-md-4">
+            <!-- animal summary -->
+            <div class="thumbnail">
+              <%= image_tag animal.avatar.url(:thumb) %>
+              <div class="caption">
+                <h4><%= animal.name %></h4>
+                <small class="text-info">
+                  <%= animal.species %>
 
-                <% if animal.breed.present? %>
-                  &bull; <%= animal.breed %>
-                <% end %>
-              </small>
-              <p class="desc"><small><%= animal.description %></small></p>
-              <div class="btn-group">
-                <%= link_to "View", charity_animal_path( @charity, animal ), class: "btn btn-primary" %>
+                  <% if animal.breed.present? %>
+                    &bull; <%= animal.breed %>
+                  <% end %>
+                </small>
+                <p class="desc"><small><%= animal.description %></small></p>
 
-                <% if animal.can_sponsor? %>
-                  <%= link_to "Sponsor", "#", class: "btn btn-info" %>
-                <% end %>
+                <!-- animal options -->
+                <div class="btn-group">
+                  <%= link_to "View", charity_animal_path( @charity, animal ), class: "btn btn-primary" %>
 
-                <% if animal.can_adopt? %>
-                  <%= link_to "Adopt", adopt_charity_animal_path( @charity, animal ), class: "btn btn-success" %>
-                <% end %>
+                  <% if animal.can_sponsor? %>
+                    <%= link_to "Sponsor", donate_charity_path( @charity ), class: "btn btn-info" %>
+                  <% end %>
+
+                  <% if animal.can_adopt? %>
+                    <%= link_to "Adopt", adopt_charity_animal_path( @charity, animal ), class: "btn btn-success" %>
+                  <% end %>
+                </div><!-- /animal options -->
               </div>
-            </div>
+            </div><!-- /animal summary -->
           </div>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
-</div>
-
+        <% end %>
+      </div>
+    <% end %>
+  </div><!-- /animal gallery -->
+<% end %>

@@ -9,7 +9,9 @@
     <div class="charity-summary">
       <div class="row">
         <div class="col1 col-md-3">
-          <img class="site-logo avatar" src="http://placehold.it/150x150" alt="Site logo" />
+          <% if charity.avatar.present? %>
+            <%= image_tag charity.avatar.url(:medium), class: "site-logo avatar" %>
+          <% end %>
         </div>
         <div class="col2 col-md-8">
           <h4><%= charity.org_name %></h4>

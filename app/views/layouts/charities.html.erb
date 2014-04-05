@@ -1,9 +1,10 @@
 <% content_for :head do %>
 <%= stylesheet_link_tag params[ :controller ], media: "all", "data-turbolinks-track" => true %>
 <%= javascript_include_tag "cp" %>
-<% if @charity.template > 1 %>
-<% template = "template_" + @charity.template.to_s %>
-<%= stylesheet_link_tag template, media: "all", "data-turbolinks-track" => true %>
+<% if @charity.banner_avatar.present? %>
+  <style>
+    #site-masthead { background: url(<%= @charity.banner_avatar %>) }
+  </style>
 <% end %>
 <% end %>
 
@@ -14,8 +15,8 @@
 
   <div id="site-masthead">
     <h1 class="masthead-header"><%= link_to @charity.org_name, charity_path( @charity ) %></h1>
-    <% if @image.present? %>
-      <img class="site-logo avatar" src="http://placehold.it/150x150" alt="Site logo" />
+    <% if @charity.avatar.present? %>
+      <%= image_tag @charity.avatar.url(:medium), class: "site-logo avatar img-thumbnail" %>
     <% end %>
   </div>
 

@@ -1,0 +1,35 @@
+// Place all the styles related to the documentation controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+/*
+ *= require site
+ *= require welcome
+ */
+ 
+h2
+{
+        font-size: 25px;
+        text-decoration: underline;
+}
+ 
+p, ul
+{
+       
+        color: white;
+}
+ 
+#my-slideshow
+{
+        margin-left: auto;
+        margin-right: auto;
+}
+ 
+#help-heading
+{
+        text-align: center;
+}
+ 
+#instr
+{
+        text-align: center;
+}

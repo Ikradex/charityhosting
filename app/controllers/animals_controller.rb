@@ -67,15 +67,12 @@ class AnimalsController < ApplicationController
     end
   end
 
+  # adopt an animal
   def adopt
     get_charity_info
     @animal = @charity.animals.find_by_name( params[ :animal_id ].capitalize )
 
-    if @animal.can_adopt?
-      if request.post?
-
-      end
-    else
+    unless @animal.can_adopt?
       redirect_to charity_animal_path( @charity, @animal ), flash: { overhead: "This animal cannot be adopted" }
     end
   end

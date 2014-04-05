@@ -1,8 +1,13 @@
 class PostsController < ApplicationController
+  #==============================================#
+  # CRUD
+  #==============================================#
+
   def index
     @charity = Charity.find_by_domain( params[ :charity_id ] )
     @pages = @charity.pages
 
+    # paginate posts, split every 9 per page
     @page_break_num = 9
     @posts = @charity.posts.paginate( page: params[ :page ], per_page: @page_break_num )
   end
@@ -24,7 +29,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    get_charity_info 
+    get_charity_info
 
     if is_auth
       @post = @charity.posts.create( get_post_params )
@@ -88,7 +93,7 @@ class PostsController < ApplicationController
     @charity = Charity.find_by_domain( params[ :charity_id ] )
     @pages = @charity.pages
   end
-  
+
   def is_auth
     ( session[ :auth ] and session[ :user_id ] == @charity.user_id )
   end

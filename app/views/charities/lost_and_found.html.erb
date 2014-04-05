@@ -9,7 +9,11 @@
 			<% @lost_cases.each do |lost_case| %>
 				<div class="thumbnail-col col-xs-12 col-sm-6 col-md-4">
 	        <div class="thumbnail">
-	          <img src="http://placehold.it/300x275" alt="...">
+	        	<% if lost_case.avatar.present? %>
+	          <%= image_tag lost_case.avatar.url(:large), width: 300, height: 275, class: "img-thumbnail" %>
+	          <% else %>
+	          	<img src="http://placehold.it/300x300" alt="...">
+	          <% end %>
 	          <div class="caption">
 	            <h4><%= lost_case.animal_name %></h4>
 
@@ -28,6 +32,7 @@
 <p>If you've lost an animal and need help broadcasting to a wider area, here is the perfect medium for you. Just fill in the form below with a description of your animal. Provided a photo of your animal is very helpful.</p>
 
 <%= form_for :lost_case do |f| %>
+	<%= f.file_field :avatar, class: "btn btn-block btn-primary" %>
 	<%= f.label :owner_email, "Email to contact you by" %>
 	<%= f.text_field :owner_email, type: "email", class: "form-control", placeholder: "Email", required: true %>
 

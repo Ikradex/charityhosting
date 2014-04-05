@@ -1,15 +1,8 @@
 class PagesController < ApplicationController
   def show
-    # sometimes the page's id can be either as id or page_id in the request parameters
-    # if neither are present (eg. http://charityhosting.ie/charities/catactiontrust ) 
-    # then the page request must be the index
-
-    id = params[ :id ] ? params[ :id ] : params[ :page_id ] ? params[ :page_id ] : "index"
     @charity = Charity.find_by_domain( params[ :charity_id ] )
-    @page = @charity.pages.find_by_title( id )
-    # we can get all pages based on the charity id - rails makes it so we can access it like an attribute
+    @page = @charity.pages.find_by_title( params[ :page_id ] )
     @pages = @charity.pages
-    # same applies for content - notice one-to-one (has_one) associations are not pluralised
     @content = @page.content
   end
 
@@ -17,31 +10,35 @@ class PagesController < ApplicationController
     # we always fetch a charity based on the domain in the url
     @charity = Charity.find_by_domain( params[ :charity_id ] )
     @pages = @charity.pages
+    @user = User.find( session[ :user_id ] ) unless session[ :auth ].blank?
 
     # make sure this admin is auth and is his own charity
-    if session[ :auth ] and session[ :user_id ] == @charity.user_id
-      @page = @charity.pages.build
-      @content = @page.build_content
+    if @user.present? && @charity.is_admin( @user )
+        @page = @charity.pages.build
+        @content = @page.build_content
     else
-      redirect_to @charity
+      flash[ :overhead ] = "You are not permitted to do that."
     end
+
+    redirect_to @charity
   end
 
   def create
     @charity = Charity.find_by_domain( params[ :charity_id ] )
+    @user = User.find( session[ :user_id ] ) unless session[ :auth ].blank?
     
-    if session[ :auth ] and session[ :user_id ] == @charity.user_id
+    if @user.present? && @charity.is_admin( @user )
       @page = @charity.pages.create( get_page_params )
       @content = @page.create_content( get_content_params )
 
       if @page.save
-        # redirects to a url generated based on the charity and the page in the charity
-        # eg. charity = catactiontrust, page = donations ---> url = charityhosting.ie/charities/catactiontrust/donations
-        redirect_to charity_page_path( @charity, @page )
+        redirect_to charity_page_path( @charity, @page ), flash: { overhead: "Page creation successful" }
       else
+        flash[ :overhead ] = "Page creation failed."
         render 'new'
       end
     else
+      flash[ :overhead ] = "You are not permitted to do that."
       render 'new'
     end
   end
@@ -96,6 +93,7 @@ class PagesController < ApplicationController
   end
 
   private
+
   def get_page_params
     params[ :page ] ? params[ :page ].permit( :title ) : ""
   end

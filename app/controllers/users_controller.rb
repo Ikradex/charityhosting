@@ -4,13 +4,30 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new( get_post_params )
+    @user = User.new( get_user_params )
 
     if @user.save
       sess_auth( @user )
       redirect_to charities_path
     else
       render 'new'
+    end
+  end
+
+  def edit 
+    if session[ :auth ]
+      @user = User.find( session[ :user_id ] )
+    else
+      redirect_to :back, flash: { overhead: "You do not have permission to do that." }
+    end
+  end
+
+  def update
+    if session[ :auth ]
+      @user = User.find( session[ :user_id ] )
+      @user.update_attributes( get_user_params )
+    else
+      redirect_to :back, flash: { overhead: "You do not have permission to do that." }
     end
   end
 
@@ -50,7 +67,7 @@ class UsersController < ApplicationController
   end
 
   private
-  def get_post_params
+  def get_user_params
     params.require( :user ).permit( :f_name, :l_name, :email, :email_confirmation, :password, :password_confirmation )
   end
 

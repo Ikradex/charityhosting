@@ -1,5 +1,5 @@
 <% content_for :head do %>
-<%= stylesheet_link_tag "welcome", media: "all", "data-turbolinks-track" => true %>
+<%= stylesheet_link_tag params[ :controller ], media: "all", "data-turbolinks-track" => true %>
 <% end %>
 
 <% content_for :app_content do %>
@@ -12,13 +12,18 @@
       <a class="navbar-brand" href="/">CSM</a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse">
+      <!-- nav -->
       <ul class="nav navbar-nav">           
         <li><%= link_to  "Charities", charities_path %></li>
         <li><a href="#fakelink">About</a></li>
         <li><a href="#fakelink">Help</a></li>
       </ul>
-      <%= link_to "Login", login_path, class: "btn btn-primary navbar-btn btn-sm" %>
-      <%= link_to "Sign up", register_path, class: "btn btn-primary navbar-btn btn-sm" %>
+      <% if !session[ :auth ] %>
+        <!-- login/register btns -->
+        <%= link_to "Login", login_path, class: "btn btn-primary navbar-btn btn-sm" %>
+        <%= link_to "Sign up", register_path, class: "btn btn-primary navbar-btn btn-sm" %>
+      <% end %>
+      <!-- search bar form -->
       <form class="navbar-form navbar-right" action="charities/search" method="GET" role="search">
         <div class="form-group">
           <div class="input-group">
@@ -28,7 +33,7 @@
             </span>            
           </div>
         </div>               
-      </form>
+      </form><!-- /search bar form -->
     </div><!-- /.navbar-collapse -->
   </nav>
 </header>

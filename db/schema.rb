@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140320075605) do
+ActiveRecord::Schema.define(version: 20140320115249) do
 
   create_table "accounts", force: true do |t|
     t.float    "income"
@@ -105,11 +105,15 @@ ActiveRecord::Schema.define(version: 20140320075605) do
   end
 
   create_table "lost_cases", force: true do |t|
-    t.string  "owner_email"
-    t.string  "animal_name"
-    t.string  "description"
-    t.integer "image_id"
-    t.integer "charity_id"
+    t.string   "owner_email"
+    t.string   "animal_name"
+    t.string   "description"
+    t.integer  "image_id"
+    t.integer  "charity_id"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "pages", force: true do |t|
