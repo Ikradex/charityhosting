@@ -38,13 +38,14 @@ class Charity < ActiveRecord::Base
   accepts_nested_attributes_for :account, :pages
   validates_associated :pages
 
+  # returns charities with a name similar to the query string
   def self.search( query )
     if query
       find( :all, :conditions => [ "org_name LIKE ?", "%#{query}%" ])
     end
   end
 
-  def self.is_admin( user )
+  def is_admin( user )
     if user
       user.id == self.user_id
     end

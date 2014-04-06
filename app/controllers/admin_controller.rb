@@ -34,7 +34,9 @@ class AdminController < ApplicationController
 
     if request.post?
       # get the request based on secret token given through email
-      @request = Request.find_by_approval_token( params[ :user ][ :approval_token ] )
+      @token = params[ :user ][ :approval_token ]
+
+      @request = Request.find_by_approval_token( @token )
 
       if @request.present? and @request.approved?
         # convert our request to charity parameters for filtering
@@ -42,7 +44,7 @@ class AdminController < ApplicationController
 
         user_id = 0;
         # create new user if not logged in
-        if params[ :user ] and !session[ :auth ]
+        if params[ :user ] and ! session[ :auth ]
           @user = User.create( get_user_params )
 
           if @user.save!
@@ -50,6 +52,11 @@ class AdminController < ApplicationController
             session[ :user_id ] = user_id
             session[ :auth ] = true
           else
+            @user.errors.full_messages.each_with_index do |err, index|
+              err = "User error: " + err
+              @user.errors.full_messages[ index ] = err
+            end
+
             ( @form_errors << @user.errors.full_messages ).flatten!
           end
         else
@@ -71,8 +78,13 @@ class AdminController < ApplicationController
             render 'validate_charity', flash: { overhead: "Charity validation unsuccessful" }
           end
         else
+          @charity.errors.full_messages.each_with_index do |err, index|
+            err = "Charity error: " + err
+            @charity.errors.full_messages[ index ] = err
+          end
+
           ( @form_errors << @charity.errors.full_messages ).flatten!
-          render 'validate_charity'
+          render 'validate_charity', { token: @token }
         end
       else
         redirect_to charities_path, flash: { overhead: "Request not approved yet or does not exist" }

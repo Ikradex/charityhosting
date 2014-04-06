@@ -40,7 +40,7 @@
     <%= form_for :user do |f| %>
       <%= f.hidden_field :approval_token, value: params[ :token ] %>
 
-      <% if session[ :user_id ].blank? or @user.email != @request.email %>
+      <% if @user.blank? || ( @request.present? && @user.email != @request.email ) %>
         <!-- user form -->
 
         <h4>Your account information.</h4>

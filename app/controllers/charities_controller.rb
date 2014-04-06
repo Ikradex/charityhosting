@@ -24,9 +24,9 @@ class CharitiesController < ApplicationController
   def edit
     @charity = Charity.find_by_domain( params[ :charity_id ] )
     @pages = @charity.pages
-    @user = User.find( session[ :user_id ] )
+    @user = User.find( session[ :user_id ] ) unless session[ :auth ].blank?
 
-    unless @charity.is_admin( @user )
+    unless @user.present? && @charity.is_admin( @user )
       redirect_to charity_path( @charity ), flash: { overhead: "You do not have permission for that." }
     end
   end
