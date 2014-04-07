@@ -14,8 +14,8 @@ class PagesController < ApplicationController
 
     # make sure this admin is auth and is his own charity
     if @user.present? && @charity.is_admin( @user )
-        @page = @charity.pages.build
-        @content = @page.build_content
+      @page = @charity.pages.build
+      @content = @page.build_content
     else
       flash[ :overhead ] = "You are not permitted to do that."
     end

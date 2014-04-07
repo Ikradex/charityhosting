@@ -6,7 +6,7 @@ class AdminController < ApplicationController
       @requests_pending = Request.where( approved: false ).limit( 5 )
       @charities_validated = Charity.last( 5 )
     else
-      redirect_to login_path( :return => reques.url )
+      redirect_to login_path( :return => request.url )
     end
   end
 

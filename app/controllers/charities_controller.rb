@@ -35,7 +35,7 @@ class CharitiesController < ApplicationController
     @charity = Charity.find_by_domain( params[ :id ] )
     @user = User.find( session[ :user_id ] ) unless session[ :auth ].blank?
 
-    if @user.present && @charity.is_admin( @user )
+    if @user.present? && @charity.is_admin( @user )
       @charity.update_attributes( get_charity_params )
 
       flash[ :overhead ] = "Charity updated successfully"

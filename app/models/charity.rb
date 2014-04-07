@@ -45,7 +45,7 @@ class Charity < ActiveRecord::Base
     end
   end
 
-  def is_admin( user )
+  def self.is_admin( user )
     if user
       user.id == self.user_id
     end

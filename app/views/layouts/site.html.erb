@@ -46,7 +46,7 @@
             <span class="dropdown-arrow"></span>
             <!-- option list -->
             <ul class="dropdown-menu">
-              <% if session[ :user_id ] == User.get_admin.id %>
+              <% if @user.id == User.get_admin.id %>
               <li><%= link_to "Admin", admin_index_path %></li>
               <% end %>
               <li><%= link_to "Account", "#" %></li>
